@@ -8,6 +8,7 @@
 -------------------
 
 |||
+|---|---|
 | /joe/e                      | cursor set to End of match                           |
 | 3/joe/e+1                   | find 3rd joe cursor set to End of match plus 1 [C]   |
 | /joe/s-2                    | cursor set to Start of match minus 2                 |
