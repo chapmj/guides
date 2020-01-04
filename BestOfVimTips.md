@@ -220,7 +220,7 @@ best-global command
 | `:g/^/t.`                      | duplicate every line                              |
 | `:g/fred/t$`                   | copy (transfer) lines matching fred to EOF        |
 | `:g/stage/t'a`                 | copy (transfer) lines matching stage to marker a  |
-| `:g/^Chapter/t.|s/./-/g`       | Automatically underline selecting headings        |
+| `:g/^Chapter/t.\|s/./-/g`      | Automatically underline selecting headings        |
 | `:g/\\(^I\[^^I\]\*\\)\\{80}/d` | delete all lines containing at least 80 tabs      |
 
 Save results to a register/paste buffer
