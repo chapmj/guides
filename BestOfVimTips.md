@@ -183,185 +183,59 @@ Substitute using a register
 
 ORing
 -------
-|||
-|---|---|
-| :%s/goat\|cow/sheep/gc      | ORing (must break pipe) |
-| :'a,'bs#\[\|\]##g           | remove [] from lines between markers a and b |
-| :%s/\v(.\*\n){5}/&\r        | insert a blank line every 5 lines |
+|                            |                                              |
+|----------------------------|----------------------------------------------|
+| `:%s/goat\|cow/sheep/gc`   | ORing (must break pipe)                      |
+| `:%s/\v(.\*\n){5}/&\r`     | insert a blank line every 5 lines            |
 
 Calling a VIM function
 ----------------------
-|||
-|---|---|
-| :s/__date__/\=strftime("%c")/ | insert datestring |
-| :inoremap \zd <C-R>=strftime("%d%b%y")<CR>    | insert date eg 31Jan11 |
+|                                              |                        |
+|----------------------------------------------|------------------------|
+| `:s/__date__/\=strftime("%c")/`              | insert datestring      |
+| `:inoremap \zd <C-R>=strftime("%d%b%y")<CR>` | insert date eg 31Jan11 |
 
-Working with Columns sub any str1 in col3
------------------------------------------
-|||
-|---|---|
-| :%s:\(\(\w\+\s\+\)\{2}\)str1:\1str2: ||
-
-Swapping first & last column (4 columns)
-----------------
-|||
-|---|---|
-|:%s:\(\w\+\)\(.\*\s\+\)\(\w\+\)$:\3\2\1: ||
 
 Format a mysql query 
 --------------------
-|||
-|---|---|
-| :%s#\<from\>\|\<where\>\|\<left join\>\|\<\inner join\>#\r&#g ||
+|                                                                 |   |
+|-----------------------------------------------------------------|---|
+| `:%s#\<from\>\|\<where\>\|\<left join\>\|\<\inner join\>#\r&#g` |   |
 
-Filter all form elements into paste register
---------------------------------------------
-|||
-|---|---|
-| :redir @\*|sil exec 'g#<\(input\|select\|textarea\|/\=form\)\>#p'|redir END ||
-| :nmap ,z :redir @\*\<Bar\>sil exec ||
-| 'g@<\(input\\\<Bar\>select\\\<Bar\>textarea\\\<Bar\>/\=form\)\>@p'\<Bar\>redir END\<CR\> ||
+best-global command 
+-------------------
+|                                |                                                   |
+|--------------------------------|---------------------------------------------------|
+| `:g/gladiolli/#`               | display with line numbers                         |
+| `:g/fred.\*joe.\*dick/`        | display all lines fred,joe & dick                 |
+| `:g/\<fred\>/`                 | display all lines fred but not freddy             |
+| `:g/^\s\*$/d`                  | delete all blank lines                            |
+| `:g!/^dd/d`                    | delete lines not containing string                |
+| `:v/^dd/d`                     | delete lines not containing string                |
+| `:g/fred/,/joe/j`              | Join Lines                                        |
+| `:g/-------/.-10,.d`           | Delete string & 10 previous lines                 |
+| `:v/./,/./-j`                  | compress empty lines                              |
+| `:g/^$/,/./-j`                 | compress empty lines                              |
+| `:'a,'bg/^/m'b`                | Reverse a section a to b                          |
+| `:g/^/t.`                      | duplicate every line                              |
+| `:g/fred/t$`                   | copy (transfer) lines matching fred to EOF        |
+| `:g/stage/t'a`                 | copy (transfer) lines matching stage to marker a  |
+| `:g/^Chapter/t.|s/./-/g`       | Automatically underline selecting headings        |
+| `:g/\\(^I\[^^I\]\*\\)\\{80}/d` | delete all lines containing at least 80 tabs      |
 
-Substitute string in column 30 
-------------------------------
-|||
-|---|---|
-:%s/^\(.\{30\}\)xx/\1yy/
-
-Decrement numbers by 3
-------------------------
-|||
-|---|---|
-| :%s/\d\+/\=(submatch(0)-3)/ ||
-
-Increment numbers by 6 on certain lines only
-----------------
-|||
-|---|---|
-| :g/loc\|function/s/\d/\=submatch(0)+6/ ||
-
-Better
-------
-|||
-|---|---|
-| :%s#txtdev\zs\d#\=submatch(0)+1#g ||
-| :h /\zs ||
-
-Increment only numbers gg\d\d  by 6 (another way)
-----------------
-|||
-|---|---|
-| :%s/\(gg\)\@<=\d\+/\=submatch(0)+6/ ||
-| :h zero-width ||
-
-Rename a string with an incrementing number
-----------------
-|||
-|---|---|
-| :let i=10 \| 'a,'bg/Abc/s/yy/\=i/ \| let i=i+1 | convert yy to 10,11,12 etc |
-
-As above but more precise
-----------------
-|||
-|---|---|
-`:let i=10 | 'a,'bg/Abc/s/xx\zsyy\ze/\=i/ |let i=i+1 # convert xxyy to xx11,xx12,xx13`
-
-Find replacement text, put in memory, then use \zs to simplify substitute
-----------------
-|||
-|---|---|
-| :%s/"\([^.]\+\).\*\zsxx/\1/ ||
-
-Pull word under cursor into LHS of a substitute
-----------------
-|||
-|---|---|
-| :nmap <leader>z :%s#\<<c-r>=expand("<cword>")<cr>\># ||
-
-Pull Visually Highlighted text into LHS of a substitute
-----------------
-|||
-|---|---|
-| :vmap <leader>z :<C-U>%s/\<<c-r>\*\>/ ||
-
-Substitute singular or plural
-----------------
-|||
-|---|---|
-| :'a,'bs/bucket\(s\)\*/bowl\1/gic ||
-
-All following performing similar task, substitute within substitution
---------------
-Multiple single character substitution in a portion of line only
-----------------
-|||
-|---|---|
-| :%s,\(all/.\*\)\@<=/,\_,g     | replace all / with _ AFTER "all/" |
-
-Same thing
-----------
-:s#all/\zs.\*#\=substitute(submatch(0), '/', '\_', 'g')#
-
-Substitute by splitting line, then re-joining
------------------
-:s#all/#&^M#|s#/#\_#g|-j!
-
-Substitute inside substitute
-------------------
-:%s/.\*/\='cp '.submatch(0).' all/'.substitute(submatch(0),'/','\_','g')/
-
-\*best-global\* command 
-----------------
-| :g/gladiolli/#              | display with line numbers (YOU WANT THIS!) |
-| :g/fred.\*joe.\*dick/       | display all lines fred,joe & dick |
-| :g/\<fred\>/                | display all lines fred but not freddy |
-| :g/^\s\*$/d                 | delete all blank lines |
-| :g!/^dd/d                   | delete lines not containing string |
-| :v/^dd/d                    | delete lines not containing string |
-| :g/joe/,/fred/d             | not line based (very powerfull) |
-| :g/fred/,/joe/j             | Join Lines |
-| :g/-------/.-10,.d          | Delete string & 10 previous lines |
-| :g/{/ ,/}/- s/\n\+/\r/g     | Delete empty lines but only between {...} |
-| :v/\S/d                     | Delete empty lines (and blank lines ie whitespace) |
-| :v/./,/./-j                 | compress empty lines |
-| :g/^$/,/./-j                | compress empty lines |
-| :g/\<input\|\<form/p          | ORing |
-| :g/^/put\_                   | double space file (pu = put) |
-| :g/^/m0                     | Reverse file (m = move) |
-| :g/^/m$                     | No effect! |
-| :'a,'bg/^/m'b               | Reverse a section a to b |
-| :g/^/t.                     | duplicate every line |
-| :g/fred/t$                  | copy (transfer) lines matching fred to EOF |
-| :g/stage/t'a                | copy (transfer) lines matching stage to marker a (cannot use .) |
-| :g/^Chapter/t.|s/./-/g      | Automatically underline selecting headings |
-| :g/\\(^I\[^^I\]\*\\)\\{80}/d      | delete all lines containing at least 80 tabs |
-
-Perform a substitute on every other line
-----------------
-:g/^/ if line('.')%2|s/^/zz / 
-" match all lines containing "somestr" between markers a & b
-" copy after line containing "otherstr"
-----------------
-:'a,'bg/somestr/co/otherstr/ : co(py) or mo(ve)
-
-As above but also do a substitution
-----------------
-:'a,'bg/str1/s/str1/&&&/|mo/str2/
-:%norm jdd                  : delete every other line
-" incrementing numbers (type <c-a> as 5 characters)
-:.,$g/^\d/exe "norm! \<c-a>": increment numbers
-:'a,'bg/\d\+/norm! ^A       : increment numbers
-Storing glob results (note must use APPEND) you need to empty reg a first with qaq. 
-----------------
 Save results to a register/paste buffer
 ----------------
-:g/fred/y A                 : append all lines fred to register a
-:g/fred/y A | :let @\*=@a    : put into paste buffer
-:g//y A | :let @\*=@a    : put last glob into paste buffer [N]
-:let @a=''|g/Barratt/y A |:let @\*=@a
-" filter lines to a file (file must already exist)
-----------------
-:'a,'bg/^Error/ . w >> errors.txt
+|                             |                                     |
+|-----------------------------|-------------------------------------|
+`:g/fred/y A`                 | append all lines fred to register a |
+`:g/fred/y A | :let @\*=@a`   | put into paste buffer               |
+`:g//y A | :let @\*=@a`       | put last glob into paste buffer     |
+`:let @a=''|g/Barratt/y A |:let @\*=@a` |                           |
+
+Filter lines to a file (file must already exist)
+------------------------------------------------
+`:'a,'bg/^Error/ . w >> errors.txt`
+
 " duplicate every line in a file wrap a print '' around each duplicate
 ----------------
 :g/./yank|put|-1s/'/"/g|s/.\*/Print '&'/
