@@ -1,10 +1,7 @@
 % copied from http://zzapper.co.uk/vimtips.html 
-------------------------------------------------------------------------------
-
-*new items marked [N] , corrected items marked [C]*
 
 Searching
--------------------
+---------
 
 |||
 |---|---|
@@ -14,21 +11,19 @@ Searching
 | /joe/+3                     | find joe move cursor 3 lines down                    |
 | /^joe.\*fred.\*bill/        | : find joe AND fred AND Bill (Joe at start of line)  |
 | /^[A-J]/                    | search for lines beginning with one or more A-J      |
-| /begin\_.\*end               | search over possible multiple lines                 |
-| /fred\_s\*joe/               | any whitespace including newline                    |
+| /begin\_.\*end              | search over possible multiple lines                  |
+| /fred\_s\*joe/              | any whitespace including newline                     |
 | /fred\|joe                  | Search for FRED OR JOE                               |
-| /.\*fred\&.\*joe              | Search for FRED AND JOE in any ORDER!              |
+| /.\*fred\&.\*joe            | Search for FRED AND JOE in any ORDER!                |
 | /\<fred\>/                  | search for fred but not alfred or frederick          |
 | /\<\d\d\d\d\>               | Search for exactly 4 digit numbers                   |
 | /\D\d\d\d\d\D               | Search for exactly 4 digit numbers                   |
 | /\<\d\{4}\>                 | same thing                                           |
-| r\\([^0-9]\|^\)%.\*%          | Search for absence of a digit or beginning of line  |
+| r\\(\[^0-9\]\|^\)%.\*%      | Search for absence of a digit or beginning of line   |
 
 Finding empty lines
 -------------------
 
-|||
-|---|---|
 | /^\n\{3}                    | find 3 empty lines |
 | /^str.\*\nstr                | find 2 successive lines starting with str |
 | /\(^str.\*\n\)\{2}           | find 2 successive lines starting with str |
