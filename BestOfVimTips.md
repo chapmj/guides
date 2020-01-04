@@ -11,7 +11,7 @@ Searching
 | /joe/+3                     | find joe move cursor 3 lines down                    |
 | /^joe.\*fred.\*bill/        | : find joe AND fred AND Bill (Joe at start of line)  |
 | /^[A-J]/                    | search for lines beginning with one or more A-J      |
-| /begin\_.\*end              | search over possible multiple lines                  |
+| /begin\\\_.\*end              | search over possible multiple lines                  |
 | /fred\_s\*joe/              | any whitespace including newline                     |
 | /fred\|joe                  | Search for FRED OR JOE                               |
 | /.\*fred\&.\*joe            | Search for FRED AND JOE in any ORDER!                |
