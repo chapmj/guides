@@ -20,24 +20,17 @@ Searching
 | /\D\d\d\d\d\D               | Search for exactly 4 digit numbers                   |
 | /\<\d\{4}\>                 | same thing                                           |
 | r\\(\[^0-9\]\|^\)%.\*%      | Search for absence of a digit or beginning of line   |
-
-Finding empty lines
--------------------
-
-|---|---|
 | /^\n\{3}                    | find 3 empty lines |
-| /^str.\*\nstr                | find 2 successive lines starting with str |
-| /\(^str.\*\n\)\{2}           | find 2 successive lines starting with str |
+| /^str.\*\nstr               | find 2 successive lines starting with str |
+| /\(^str.\*\n\)\{2}          | find 2 successive lines starting with str |
 
-using rexexp memory in a search find fred.\*joe.\*joe.\*fred \*C\*
--------------------------------------------------------------
+Regex
+-----
+|||
+|---|---|
+| /\(fred\).\*\(joe\).\*\2.\*\1 | using rexexp memory in a search find fred.\*joe.\*joe.\*fred \*C\* |
+| /^\([^,]\*,\)\{8} | Repeating the Regexp (rather than what the Regexp finds) |
 
-/\(fred\).\*\(joe\).\*\2.\*\1
-
-Repeating the Regexp (rather than what the Regexp finds)
-------------------
-
-/^\([^,]\*,\)\{8}
 
 visual searching
 ------------------
