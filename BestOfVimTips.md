@@ -228,9 +228,9 @@ Save results to a register/paste buffer
 |                             |                                     |
 |-----------------------------|-------------------------------------|
 `:g/fred/y A`                 | append all lines fred to register a |
-`:g/fred/y A | :let @\*=@a`   | put into paste buffer               |
-`:g//y A | :let @\*=@a`       | put last glob into paste buffer     |
-`:let @a=''|g/Barratt/y A |:let @\*=@a` |                           |
+`:g/fred/y A \| :let @\*=@a`  | put into paste buffer               |
+`:g//y A \| :let @\*=@a`      | put last glob into paste buffer     |
+`:let @a=''\|g/Barratt/y A \|:let @\*=@a` |                          |
 
 Filter lines to a file (file must already exist)
 ------------------------------------------------
