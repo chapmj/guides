@@ -2,7 +2,6 @@
 
 Searching
 ---------
-
 |                            |                                                      |
 |----------------------------|------------------------------------------------------|
 | `/joe/e`                   | Cursor set to End of match                           |
@@ -33,113 +32,89 @@ Regex
 
 
 Visual searching
-------------------
+----------------
 |                                                                |                                      |
 |----------------------------------------------------------------|--------------------------------------|
 | `vmap // y/<C-R>"<CR>`                                         | search for visually highlighted text |
 | `vmap <silent> //    y/<C-R>=escape(@", '\\/.\*$^~[]')<CR><CR> | with spec chars                      |
 
-\zs and \ze regex delimiters :h /\zs
-------------------------------------
-|                     |                                            |
-|---------------------|--------------------------------------------|
-| `/<\zs[^>]*\ze>`    | search for tag contents, ignoring chevrons |
-
-Zero-width :h /\@=
----------------------
-
-|||
-|---|---|
-| /<\@<=[^>]\*>\@=             | search for tag contents, ignoring chevrons |
-| /<\@<=\_[^>]\*>\@=           | search for tags across possible multiple lines |
-
 Searching over multiple lines \_ means including newline
---------------------------
+--------------------------------------------------------
 
-|||
-|---|---|
-| /\<!--\_p\{-}-->                   | search for multiple line comments |
-| /fred\_s\*joe/                     | any whitespace including newline |
-| /bugs\(\_.\)\*bunny                | bugs followed by bunny anywhere in file |
-| :h \_                             | help |
+|                         |                                         |
+|-------------------------|-----------------------------------------|
+| `/<!--\_p\{-}-->`       | search for multiple line comments       |
+| `/fred\_s\*joe/`        | any whitespace including newline        |
+| `/bugs\(\_.\)\*bunny`   | bugs followed by bunny anywhere in file |
 
 Search for declaration of subroutine/function under cursor
------------
-
-|||
-|---|---|
-| :nmap gx yiw/^\(sub\<bar\>function\)\s\+<C-R>"<CR>
+----------------------------------------------------------
+|                                                      |   |
+|------------------------------------------------------|---|
+| `:nmap gx yiw/^\(sub\<bar>function\)\s\+<C-R>"<CR>`  |   |
 
 Multiple file search/operations
---------------
-|||
-|---|---|
-| :bufdo /searchstr/                : use :rewind to recommence search
+-------------------------------
+|                        |                                    |
+|------------------------|------------------------------------|
+| `:bufdo /searchstr/`   | use `:rewind` to recommence search |
 
 Multiple file search better but cheating
--------------
-| :bufdo %s/searchstr/&/gic   | say n and then a to stop
-| :bufdo execute "normal! @a" \| w   | execute macro a over all buffers |
-| :bufdo exe ":normal Gp" \| update | Paste to the end of each buffer |
-| :argdo exe '%!sort' \| w |
-
-How to search for a URL without backslashing
-----------------------------------------------
-?http://www.vim.org/        : (first) search BACKWARDS!!! clever huh!
+----------------------------------------
+|                                     |                                  |
+|-------------------------------------|----------------------------------|
+| `:bufdo %s/searchstr/&/gic`         | say n and then a to stop         |
+| `:bufdo execute "normal! @a" \| w`  | execute macro a over all buffers |
+| `:bufdo exe ":normal Gp" \| update` | Paste to the end of each buffer  |
+| `:argdo exe '%!sort' |w`            |                                  |
 
 Specify what you are NOT searching for (vowels)
--------------------------------------------------
+-----------------------------------------------
 
-|||
-|---|---|
-| /\c\v(\[^aeiou\]&\a){4}     | search for 4 consecutive consonants |
-| /\%>20l\%<30lgoat           | Search for goat between lines 20 and 30 |
-| /^.\{-}home.\{-}\zshome/e   | match only the 2nd occurence in a line of "home" |
-| :%s/home.\{-}\zshome/alone  | Substitute only the 2nd occurrence of home in any line |
-| :%s/.\*\zsone/two/          | Substitute only the LAST occurrence of one |
+|                               |                                                        |
+|-------------------------------|--------------------------------------------------------|
+| `/\c\v([^aeiou]&\a){4}`       | search for 4 consecutive consonants                    |
+| `/\%>20l\%<30lgoat`           | Search for goat between lines 20 and 30                |
+| `/^.\{-}home.\{-}\zshome/e`   | match only the 2nd occurence in a line of "home"       |
+| `:%s/home.\{-}\zshome/alone`  | Substitute only the 2nd occurrence of home in any line |
+| `:%s/.*\zsone/two/`          | Substitute only the LAST occurrence of one |
 
 Find str but not on lines containing tongue
----------------------------------------------
-|||
-|---|---|
-| ^\(.\*tongue.\*\)\@!.\*nose.\*$ ||
-| \v^((tongue)@!.)\*nose((tongue)@!.)\*$ ||
-| .\*nose.\*\&^\%(\%(tongue\)\@!.\)\*$  ||
-| :v/tongue/s/nose/&/gic ||
-| 'a,'bs/extrascost//gc       | trick: restrict search to between markers (answer n) |
-| /integ<C-L>                 | Control-L to complete search term |
+-------------------------------------------
+|                                          |                                                      |
+|------------------------------------------|------------------------------------------------------|
+| `^\(.*tongue.*\)\@!.\*nose.\*$`        |                                                      |
+| `\v^((tongue)@!.)*nose((tongue)@!.)*$` |                                                      |
+| `.*nose.*\&^\%(\%(tongue\)\@!.\)*$`   |                                                      |
+| `:v/tongue/s/nose/&/gic`                 |                                                      |
+| `'a,'bs/extrascost//gc`                  | trick: restrict search to between markers (answer n) |
+| `/integ<C-L>`                            | Control-L to complete search term                    |
 
 Best-substitution
 -----------------
 
 |||
 |---|---|
-| :%s/fred/joe/igc            | general substitute command |
-| :%s//joe/igc                | Substitute what you last searched for |
-| :%s/~/sue/igc               | Substitute your last replacement string |
-| :%s/\r//g                   | Delete DOS returns ^M |
-
-Is your Text File jumbled onto one line? use following
-------------------------------------------------------
-
-|||
-|---|---|
-| :%s/\r/\r/g                 | Turn DOS returns ^M into real returns |
-| :%s=  \*$==                 | delete end of line blanks |
-| | :%s= \+$==                | Same thing |
-| :%s#\s\*\r\?$##             | Clean both trailing spaces AND DOS returns |
-| :%s#\s\*\r\*$##             | same thing |
+| `:%s/fred/joe/igc`           | general substitute command                 |
+| `:%s//joe/igc`               | Substitute what you last searched for      |
+| `:%s/~/sue/igc`              | Substitute your last replacement string    |
+| `:%s/\r//g`                  | Delete DOS returns ^M                      |
+| `:%s/\r/\r/g`                | Turn DOS returns ^M into real returns      |
+| `:%s=  \*$==`                | delete end of line blanks                  |
+| `| :%s= \+$==`               | delete end of line blanks                  |
+| `:%s#\s\*\r\?$##`            | Clean both trailing spaces AND DOS returns |
+| `:%s#\s\*\r\*$##`            | Clean both trailing spaces AND DOS returns |
 
 Deleting empty lines
 --------------------
 
 |||
 |---|---|
-| :%s/^\n\{3}//               | delete blocks of 3 empty lines |
-| :%s/^\n\+/\r/               | compressing empty lines |
-| :%s#<[^>]\+>##g             | delete html tags, leave text (non-greedy) |
-| :%s#<\_.\{-1,}>##g          | delete html tags possibly multi-line (non-greedy) |
-| :%s#.\*\(\d\+hours\).\*#\1#   | Delete all but memorised string (\1) |
+| `:%s/^\n\{3}//`                 | delete blocks of 3 empty lines |
+| `:%s/^\n\+/\r/`                 | compressing empty lines |
+| `:%s#<[^>]\+>##g`               | delete html tags, leave text (non-greedy) |
+| `:%s#<\_.\{-1,}>##g`            | delete html tags possibly multi-line (non-greedy) |
+| `:%s#.*\(\d\+hours\).*#\1#`   | Delete all but memorised string (\1) |
 
 Parse xml/soap 
 ----------------
