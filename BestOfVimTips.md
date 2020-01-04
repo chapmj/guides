@@ -24,6 +24,7 @@ Searching
 Finding empty lines
 -------------------
 
+|---|---|
 | /^\n\{3}                    | find 3 empty lines |
 | /^str.\*\nstr                | find 2 successive lines starting with str |
 | /\(^str.\*\n\)\{2}           | find 2 successive lines starting with str |
