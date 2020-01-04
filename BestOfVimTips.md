@@ -92,7 +92,6 @@ Find str but not on lines containing tongue
 
 Best-substitution
 -----------------
-
 |||
 |---|---|
 | `:%s/fred/joe/igc`           | general substitute command                 |
@@ -101,58 +100,56 @@ Best-substitution
 | `:%s/\r//g`                  | Delete DOS returns ^M                      |
 | `:%s/\r/\r/g`                | Turn DOS returns ^M into real returns      |
 | `:%s=  \*$==`                | delete end of line blanks                  |
-| `\| :%s= \+$==`               | delete end of line blanks                  |
+| `:%s= \+$==`                 | delete end of line blanks                  |
 | `:%s#\s\*\r\?$##`            | Clean both trailing spaces AND DOS returns |
 | `:%s#\s\*\r\*$##`            | Clean both trailing spaces AND DOS returns |
 
 Deleting empty lines
 --------------------
-
-|||
-|---|---|
-| `:%s/^\n\{3}//`                 | delete blocks of 3 empty lines |
-| `:%s/^\n\+/\r/`                 | compressing empty lines |
-| `:%s#<[^>]\+>##g`               | delete html tags, leave text (non-greedy) |
-| `:%s#<\_.\{-1,}>##g`            | delete html tags possibly multi-line (non-greedy) |
-| `:%s#.*\(\d\+hours\).*#\1#`   | Delete all but memorised string (\1) |
+|                                 |                                                   |
+|---------------------------------|---------------------------------------------------|
+| `:%s/^\n\{3}//`                 | Delete blocks of 3 empty lines                    |
+| `:%s/^\n\+/\r/`                 | Compressing empty lines                           |
+| `:%s#<[^>]\+>##g`               | Delete html tags, leave text (non-greedy)         |
+| `:%s#<\_.\{-1,}>##g`            | Delete html tags possibly multi-line (non-greedy) |
+| `:%s#.*\(\d\+hours\).*#\1#`     | Delete all but memorised string (\1)              |
 
 Parse xml/soap 
 ----------------
-
-|||
-|---|---|
-| %s#><\(\[^/\\]\)#>\r<\1#g      | split jumbled up XML file into one tag per line |
-| %s/\</\r&/g                    | simple split of html/xml/soap  |
-| :%s#\<\[^\/\]#\r&#gic          | simple split of html/xml/soap  but not closing tag |
-| :%s#\<\[^\/\]#\r&#gi           | parse on open xml tag  |
-| :%s#\[\d\+\]#\r&#g             | parse on numbered array elements [1]  |
-| ggVGgJ                         | rejoin XML without extra spaces (gJ) |
-| %s=\\n#\d=\r&=g                | parse PHP error stack |
-| :%s#^\[^\t\]\\+\\t##           | Delete up to and including first tab  |
+|                                 |                                                   |
+|---------------------------------|---------------------------------------------------|
+| `%s#><\(\[^/\\]\)#>\r<\1#g`     | split jumbled up XML file into one tag per line   |
+| `%s/\</\r&/g`                   | simple split of html/xml/soap                     |
+| `:%s#\<\[^\/\]#\r&#gic`         | simple split of html/xml/soap but not closing tag |
+| `:%s#\<\[^\/\]#\r&#gi`          | parse on open xml tag                             |
+| `:%s#\[\d\+\]#\r&#g`            | parse on numbered array elements [1]              |
+| `ggVGgJ`                        | rejoin XML without extra spaces (gJ)              |
+| `%s=\\n#\d=\r&=g`               | parse PHP error stack                             |
+| `:%s#^\[^\t\]\\+\\t##`          | Delete up to and including first tab              |
 
 VIM Power Substitute
 ----------------
-|||
-|---|---|
-| :'a,'bg/fred/s/dick/joe/igc | VERY USEFUL |
+|                               |             |
+|-------------------------------|-------------|
+| `:'a,'bg/fred/s/dick/joe/igc` | VERY USEFUL |
 
 Duplicating columns
 -------------------
-|||
-|---|---|
-| :%s= [^ ]\+$=&&=            | duplicate end column |
-| :%s= \f\+$=&&=              | Dupicate filename |
-| :%s= \S\+$=&&               | usually the same |
+|                         |                      |
+|-------------------------|----------------------|
+| `:%s= [^ ]\+$=&&=`      | duplicate end column |
+| `:%s= \f\+$=&&=`        | Dupicate filename    |
+| `:%s= \S\+$=&&`         | usually the same     |
 
 Memory
 ------
 |||
-|---|---|
-| :%s#example#& = &#gic         | duplicate entire matched string |
-| :%s#.\*\(tbl\_\w\+\).\*#\1#   | extract list of all strings tbl\_\* from text |
-| :s/\(.\*\):\(.\*\)/\2 : \1/   | reverse fields separated by : |
-| :%s/^\(.\*\)\n\1$/\1/         | delete duplicate lines |
-| :%s/^\(.\*\)\(\n\1\)\+$/\1/   | delete multiple duplicate lines |
+|----|---|
+| `:%s#example#& = &#gic`         | duplicate entire matched string |
+| `:%s#.*\(tbl\_\w\+\).*#\1#`   | extract list of all strings tbl\_\* from text |
+| `:s/\(.*\):\(.*\)/\2 : \1/`   | reverse fields separated by : |
+| `:%s/^\(.*\)\n\1$/\1/`         | delete duplicate lines |
+| `:%s/^\(.*\)\(\n\1\)\+$/\1/`   | delete multiple duplicate lines |
 
 Non-greedy matching \{-}
 ------------------------
