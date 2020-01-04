@@ -5,7 +5,7 @@ Searching
 
 |||
 |---|---|
-| /joe/e                      | cursor set to End of match                           |
+| ```/joe/e```                      | cursor set to End of match                           |
 | 3/joe/e+1                   | find 3rd joe cursor set to End of match plus 1       |
 | /joe/s-2                    | cursor set to Start of match minus 2                 |
 | /joe/+3                     | find joe move cursor 3 lines down                    |
