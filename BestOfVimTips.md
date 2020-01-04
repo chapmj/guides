@@ -29,22 +29,21 @@ Regex
 |                                  |                                                                    |
 |----------------------------------|--------------------------------------------------------------------|
 | `/\(fred\).*\(joe\).*\2.*\1`     | using rexexp memory in a search find fred.\*joe.\*joe.\*fred \*C\* |
-| `/^\([^,]*,\)\{8}`              | Repeating the Regexp (rather than what the Regexp finds)           |
+| `/^\([^,]*,\)\{8}`               | Repeating the Regexp (rather than what the Regexp finds)           |
 
 
 Visual searching
 ------------------
-
-|||
-|---|---|
-`vmap // y/<C-R>"<CR>`       | search for visually highlighted text
-`vmap <silent> //    y/<C-R>=escape(@", '\\/.\*$^~[]')<CR><CR> : with spec chars
+|                                                                |                                      |
+|----------------------------------------------------------------|--------------------------------------|
+| `vmap // y/<C-R>"<CR>`                                         | search for visually highlighted text |
+| `vmap <silent> //    y/<C-R>=escape(@", '\\/.\*$^~[]')<CR><CR> | with spec chars                      |
 
 \zs and \ze regex delimiters :h /\zs
 ------------------------------------
-|||
-|---|---|
-| /<\zs[^>]\*\ze>              | search for tag contents, ignoring chevrons |
+|                     |                                            |
+|---------------------|--------------------------------------------|
+| `/<\zs[^>]*\ze>`    | search for tag contents, ignoring chevrons |
 
 Zero-width :h /\@=
 ---------------------
