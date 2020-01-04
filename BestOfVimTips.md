@@ -101,7 +101,7 @@ Best-substitution
 | `:%s/\r//g`                  | Delete DOS returns ^M                      |
 | `:%s/\r/\r/g`                | Turn DOS returns ^M into real returns      |
 | `:%s=  \*$==`                | delete end of line blanks                  |
-| `| :%s= \+$==`               | delete end of line blanks                  |
+| `\| :%s= \+$==`               | delete end of line blanks                  |
 | `:%s#\s\*\r\?$##`            | Clean both trailing spaces AND DOS returns |
 | `:%s#\s\*\r\*$##`            | Clean both trailing spaces AND DOS returns |
 
