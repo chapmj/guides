@@ -1,10 +1,9 @@
-*vimtips.txt*	For Vim version 8.0.  
-
+% copied from http://zzapper.co.uk/vimtips.html 
 ------------------------------------------------------------------------------
 
 *new items marked [N] , corrected items marked [C]*
 
-*best-searching*
+Searching
 -------------------
 
 |||
@@ -25,7 +24,7 @@
 | /\<\d\{4}\>                 | same thing                                           |
 | r\\([^0-9]\|^\)%.\*%          | Search for absence of a digit or beginning of line  |
 
-finding empty lines
+Finding empty lines
 -------------------
 
 |||
@@ -39,7 +38,8 @@ using rexexp memory in a search find fred.\*joe.\*joe.\*fred \*C\*
 
 /\(fred\).\*\(joe\).\*\2.\*\1
 
-" Repeating the Regexp (rather than what the Regexp finds)
+Repeating the Regexp (rather than what the Regexp finds)
+------------------
 
 /^\([^,]\*,\)\{8}
 
@@ -55,207 +55,315 @@ vmap <silent> //    y/<C-R>=escape(@", '\\/.\*$^~[]')<CR><CR> : with spec chars
 ------------------------------------
 |||
 |---|---|
-| /<\zs[^>]\*\ze>              : search for tag contents, ignoring chevrons
+| /<\zs[^>]\*\ze>              | search for tag contents, ignoring chevrons |
 
-" zero-width :h /\@=
+Zero-width :h /\@=
 ---------------------
-/<\@<=[^>]\*>\@=             : search for tag contents, ignoring chevrons
-/<\@<=\_[^>]\*>\@=           : search for tags across possible multiple lines
 
-" searching over multiple lines \_ means including newline
+|||
+|---|---|
+| /<\@<=[^>]\*>\@=             | search for tag contents, ignoring chevrons |
+| /<\@<=\_[^>]\*>\@=           | search for tags across possible multiple lines |
+
+Searching over multiple lines \_ means including newline
 --------------------------
 
-/\<!--\_p\{-}-->                   : search for multiple line comments
-/fred\_s\*joe/                     : any whitespace including newline
-/bugs\(\_.\)\*bunny                : bugs followed by bunny anywhere in file
-:h \_                             : help
-" search for declaration of subroutine/function under cursor
-:nmap gx yiw/^\(sub\<bar\>function\)\s\+<C-R>"<CR>
-" multiple file search/operations
-:bufdo /searchstr/                : use :rewind to recommence search
-" multiple file search better but cheating
-:bufdo %s/searchstr/&/gic   : say n and then a to stop
-:bufdo execute "normal! @a" | w   : execute macro a over all buffers [N]
-:bufdo exe ":normal Gp" | update : Paste to the end of each buffer [N]
-:argdo exe '%!sort' | w [N]
+|||
+|---|---|
+| /\<!--\_p\{-}-->                   | search for multiple line comments |
+| /fred\_s\*joe/                     | any whitespace including newline |
+| /bugs\(\_.\)\*bunny                | bugs followed by bunny anywhere in file |
+| :h \_                             | help |
 
-" How to search for a URL without backslashing
+Search for declaration of subroutine/function under cursor
+-----------
+
+|||
+|---|---|
+| :nmap gx yiw/^\(sub\<bar\>function\)\s\+<C-R>"<CR>
+
+Multiple file search/operations
+--------------
+| :bufdo /searchstr/                : use :rewind to recommence search
+
+Multiple file search better but cheating
+-------------
+| :bufdo %s/searchstr/&/gic   | say n and then a to stop
+| :bufdo execute "normal! @a" \| w   | execute macro a over all buffers |
+| :bufdo exe ":normal Gp" \| update | Paste to the end of each buffer |
+| :argdo exe '%!sort' \| w |
+
+How to search for a URL without backslashing
 ----------------------------------------------
 ?http://www.vim.org/        : (first) search BACKWARDS!!! clever huh!
 
-" Specify what you are NOT searching for (vowels)
+Specify what you are NOT searching for (vowels)
 -------------------------------------------------
 
-/\c\v([^aeiou]&\a){4}       : search for 4 consecutive consonants
-/\%>20l\%<30lgoat           : Search for goat between lines 20 and 30 [N]
-/^.\{-}home.\{-}\zshome/e   : match only the 2nd occurence in a line of "home" [N]
-:%s/home.\{-}\zshome/alone  : Substitute only the 2nd occurrence of home in any line [U]
-:%s/.\*\zsone/two/           : Substitute only the LAST occurrence of one [N]
+| /\c\v([^aeiou]&\a){4}       | search for 4 consecutive consonants |
+| /\%>20l\%<30lgoat           | Search for goat between lines 20 and 30 |
+| /^.\{-}home.\{-}\zshome/e   | match only the 2nd occurence in a line of "home" |
+| :%s/home.\{-}\zshome/alone  | Substitute only the 2nd occurrence of home in any line |
+| :%s/.\*\zsone/two/          | Substitute only the LAST occurrence of one |
 
-" find str but not on lines containing tongue
+Find str but not on lines containing tongue
 ---------------------------------------------
+|||
+|---|---|
+| ^\(.\*tongue.\*\)\@!.\*nose.\*$ ||
+| \v^((tongue)@!.)\*nose((tongue)@!.)\*$ ||
+| .\*nose.\*\&^\%(\%(tongue\)\@!.\)\*$  ||
+| :v/tongue/s/nose/&/gic ||
+| 'a,'bs/extrascost//gc       | trick: restrict search to between markers (answer n) |
+| /integ<C-L>                 | Control-L to complete search term |
 
-^\(.\*tongue.\*\)\@!.\*nose.\*$
-\v^((tongue)@!.)*nose((tongue)@!.)\*$
-.\*nose.\*\&^\%(\%(tongue\)\@!.\)\*$ 
-:v/tongue/s/nose/&/gic
-'a,'bs/extrascost//gc       : trick: restrict search to between markers (answer n) [N]
-/integ<C-L>                 : Control-L to complete search term [N]
+Best-substitution
+-----------------
 
-----------------------------------------
-*best-substitution*
-----------------------------------------
-
-:%s/fred/joe/igc            : general substitute command
-:%s//joe/igc                : Substitute what you last searched for [N]
-:%s/~/sue/igc               : Substitute your last replacement string [N]
-:%s/\r//g                   : Delete DOS returns ^M
+|||
+|---|---|
+| :%s/fred/joe/igc            | general substitute command |
+| :%s//joe/igc                | Substitute what you last searched for |
+| :%s/~/sue/igc               | Substitute your last replacement string |
+| :%s/\r//g                   | Delete DOS returns ^M |
 
 Is your Text File jumbled onto one line? use following
---------------------------------------------------------
+------------------------------------------------------
 
-:%s/\r/\r/g                 : Turn DOS returns ^M into real returns
-:%s=  *$==                  : delete end of line blanks
-:%s= \+$==                  : Same thing
-:%s#\s*\r\?$##              : Clean both trailing spaces AND DOS returns
-:%s#\s*\r*$##               : same thing
+|||
+|---|---|
+| :%s/\r/\r/g                 | Turn DOS returns ^M into real returns |
+| :%s=  \*$==                 | delete end of line blanks |
+| | :%s= \+$==                | Same thing |
+| :%s#\s\*\r\?$##             | Clean both trailing spaces AND DOS returns |
+| :%s#\s\*\r\*$##             | same thing |
 
-" deleting empty lines
+Deleting empty lines
+--------------------
+
+|||
+|---|---|
+| :%s/^\n\{3}//               | delete blocks of 3 empty lines |
+| :%s/^\n\+/\r/               | compressing empty lines |
+| :%s#<[^>]\+>##g             | delete html tags, leave text (non-greedy) |
+| :%s#<\_.\{-1,}>##g          | delete html tags possibly multi-line (non-greedy) |
+| :%s#.*\(\d\+hours\).*#\1#   | Delete all but memorised string (\1) |
+
+Parse xml/soap 
 ----------------
 
-:%s/^\n\{3}//               : delete blocks of 3 empty lines
-:%s/^\n\+/\r/               : compressing empty lines
-:%s#<[^>]\+>##g             : delete html tags, leave text (non-greedy)
-:%s#<\_.\{-1,}>##g          : delete html tags possibly multi-line (non-greedy)
-:%s#.*\(\d\+hours\).*#\1#   : Delete all but memorised string (\1) [N]
+|||
+|---|---|
+| %s#><\([^/]\)#>\r<\1#g      | split jumbled up XML file into one tag per line |
+| %s/\</\r&/g                 | simple split of html/xml/soap  |
+| :%s#\<[^/]#\r&#gic          | simple split of html/xml/soap  but not closing tag |
+| :%s#\<[^/]#\r&#gi           | parse on open xml tag  |
+| :%s#\[\d\+\]#\r&#g          | parse on numbered array elements [1]  |
+| ggVGgJ                      | rejoin XML without extra spaces (gJ) |
+| %s=\\n#\d=\r&=g             | parse PHP error stack |
+| :%s#^[^\t]\+\t##            | Delete up to and including first tab  |
 
-" parse xml/soap 
+VIM Power Substitute
 ----------------
+|||
+|---|---|
+| :'a,'bg/fred/s/dick/joe/igc | VERY USEFUL |
 
-%s#><\([^/]\)#>\r<\1#g      : split jumbled up XML file into one tag per line [N]
-%s/</\r&/g                  : simple split of html/xml/soap  [N]
-:%s#<[^/]#\r&#gic           : simple split of html/xml/soap  but not closing tag [N]
-:%s#<[^/]#\r&#gi            : parse on open xml tag [N]
-:%s#\[\d\+\]#\r&#g          : parse on numbered array elements [1] [N]
-ggVGgJ                      : rejoin XML without extra spaces (gJ) [N]
-%s=\\n#\d=\r&=g             : parse PHP error stack [N]
-:%s#^[^\t]\+\t##            : Delete up to and including first tab [N]
-" VIM Power Substitute
+Duplicating columns
 ----------------
-:'a,'bg/fred/s/dick/joe/igc : VERY USEFUL
-" duplicating columns
+|||
+|---|---|
+| :%s= [^ ]\+$=&&=            | duplicate end column |
+| :%s= \f\+$=&&=              | Dupicate filename |
+| :%s= \S\+$=&&               | usually the same |
+
+Memory
 ----------------
-:%s= [^ ]\+$=&&=            : duplicate end column
-:%s= \f\+$=&&=              : Dupicate filename
-:%s= \S\+$=&&               : usually the same
-" memory
+|||
+|---|---|
+| :%s#example#& = &#gic         | duplicate entire matched string |
+| :%s#.\*\(tbl\_\w\+\).\*#\1#   | extract list of all strings tbl\_\* from text |
+| :s/\(.\*\):\(.\*\)/\2 : \1/   | reverse fields separated by : |
+| :%s/^\(.\*\)\n\1$/\1/         | delete duplicate lines |
+| :%s/^\(.\*\)\(\n\1\)\+$/\1/   | delete multiple duplicate lines |
+
+Non-greedy matching \{-}
 ----------------
-:%s#example#& = &#gic        : duplicate entire matched string [N]
-:%s#.*\(tbl_\w\+\).*#\1#    : extract list of all strings tbl_* from text  [NC]
-:s/\(.*\):\(.*\)/\2 : \1/   : reverse fields separated by :
-:%s/^\(.*\)\n\1$/\1/        : delete duplicate lines
-:%s/^\(.*\)\(\n\1\)\+$/\1/  : delete multiple duplicate lines [N]
-" non-greedy matching \{-}
+|||
+|---|---|
+| :%s/^.\{-}pdf/new.pdf/      | delete to 1st occurence of pdf only (non-greedy) |
+| %s#^.\{-}\([0-9]\{3,4\}serial\)#\1#gic | delete up to 123serial or 1234serial |
+
+Use of optional atom \\?
 ----------------
-:%s/^.\{-}pdf/new.pdf/      : delete to 1st occurence of pdf only (non-greedy)
-%s#^.\{-}\([0-9]\{3,4\}serial\)#\1#gic : delete up to 123serial or 1234serial [N]
-" use of optional atom \?
+|||
+|---|---|
+| :%s#\<[zy]\?tbl\_[a-z\_]\+\>#\L&#gc | lowercase with optional leading characters |
+
+Over possibly many lines
 ----------------
-:%s#\<[zy]\?tbl_[a-z_]\+\>#\L&#gc : lowercase with optional leading characters
-" over possibly many lines
+|||
+|---|---|
+| :%s/\<!--\_.\{-}--\>//      | delete possibly multi-line comments |
+| :help /\{-}                 | help non-greedy |
+
+Substitute using a register
 ----------------
-:%s/<!--\_.\{-}-->//        : delete possibly multi-line comments
-:help /\{-}                 : help non-greedy
-" substitute using a register
-----------------
-:s/fred/<c-r>a/g            : sub "fred" with contents of register "a"
-:s/fred/<c-r>asome_text<c-r>s/g  
-:s/fred/\=@a/g              : better alternative as register not displayed (not *) [C]
-:s/fred/\=@*/g              : replace string with contents of paste register [N]
-" multiple commands on one line
-:%s/\f\+\.gif\>/\r&\r/g | v/\.gif$/d | %s/gif/jpg/
-:%s/a/but/gie|:update|:next : then use @: to repeat
-" ORing
+|||
+|---|---|
+| :s/fred/\<c-r\>a/g            | sub "fred" with contents of register "a" |
+| :s/fred/\<c-r\>asome\_text<c-r>s/g  ||
+| :s/fred/\=@a/g              | better alternative as register not displayed (not \*) |
+| :s/fred/\=@\*/g              | replace string with contents of paste register |
+
+Multiple commands on one line
+----------
+|||
+|---|---|
+| :%s/\f\+\.gif\>/\r&\r/g | v/\.gif$/d | %s/gif/jpg/
+| :%s/a/but/gie|:update|:next | then use @: to repeat |
+
+ORing
+-------
+|||
+|---|---|
 :%s/goat\|cow/sheep/gc      : ORing (must break pipe)
 :'a,'bs#\[\|\]##g           : remove [] from lines between markers a and b [N]
-:%s/\v(.*\n){5}/&\r         : insert a blank line every 5 lines [N]
-" Calling a VIM function
-----------------
-:s/__date__/\=strftime("%c")/ : insert datestring
-:inoremap \zd <C-R>=strftime("%d%b%y")<CR>    : insert date eg 31Jan11 [N]
-" Working with Columns sub any str1 in col3
-----------------
-:%s:\(\(\w\+\s\+\)\{2}\)str1:\1str2:
-" Swapping first & last column (4 columns)
-----------------
-:%s:\(\w\+\)\(.*\s\+\)\(\w\+\)$:\3\2\1:
-" format a mysql query 
-----------------
-:%s#\<from\>\|\<where\>\|\<left join\>\|\<\inner join\>#\r&#g
-" filter all form elements into paste register
-----------------
-:redir @*|sil exec 'g#<\(input\|select\|textarea\|/\=form\)\>#p'|redir END
-:nmap ,z :redir @*<Bar>sil exec 'g@<\(input\<Bar>select\<Bar>textarea\<Bar>/\=form\)\>@p'<Bar>redir END<CR>
-" substitute string in column 30 [N]
-----------------
-:%s/^\(.\{30\}\)xx/\1yy/
-" decrement numbers by 3
-:%s/\d\+/\=(submatch(0)-3)/
-" increment numbers by 6 on certain lines only
-----------------
-:g/loc\|function/s/\d/\=submatch(0)+6/
-" better
-----------------
-:%s#txtdev\zs\d#\=submatch(0)+1#g
-:h /\zs
-" increment only numbers gg\d\d  by 6 (another way)
-----------------
-:%s/\(gg\)\@<=\d\+/\=submatch(0)+6/
-:h zero-width
-" rename a string with an incrementing number
-----------------
-:let i=10 | 'a,'bg/Abc/s/yy/\=i/ |let i=i+1 # convert yy to 10,11,12 etc
-" as above but more precise
-----------------
-:let i=10 | 'a,'bg/Abc/s/xx\zsyy\ze/\=i/ |let i=i+1 # convert xxyy to xx11,xx12,xx13
-" find replacement text, put in memory, then use \zs to simplify substitute
-----------------
-:%s/"\([^.]\+\).*\zsxx/\1/
-" Pull word under cursor into LHS of a substitute
-----------------
-:nmap <leader>z :%s#\<<c-r>=expand("<cword>")<cr>\>#
-" Pull Visually Highlighted text into LHS of a substitute
-----------------
-:vmap <leader>z :<C-U>%s/\<<c-r>*\>/
-" substitute singular or plural
-----------------
-:'a,'bs/bucket\(s\)*/bowl\1/gic   [N]
-----------------------------------------
+:%s/\v(.\*\n){5}/&\r         : insert a blank line every 5 lines [N]
 
-" all following performing similar task, substitute within substitution
+Calling a VIM function
+----------------
+|||
+|---|---|
+| :s/__date__/\=strftime("%c")/ | insert datestring |
+| :inoremap \zd <C-R>=strftime("%d%b%y")<CR>    | insert date eg 31Jan11 |
+
+Working with Columns sub any str1 in col3
+----------------
+|||
+|---|---|
+| :%s:\(\(\w\+\s\+\)\{2}\)str1:\1str2: ||
+
+Swapping first & last column (4 columns)
+----------------
+|||
+|---|---|
+|:%s:\(\w\+\)\(.\*\s\+\)\(\w\+\)$:\3\2\1: ||
+
+Format a mysql query 
+----------------
+|||
+|---|---|
+| :%s#\<from\>\|\<where\>\|\<left join\>\|\<\inner join\>#\r&#g ||
+
+Filter all form elements into paste register
+----------------
+|||
+|---|---|
+| :redir @\*|sil exec 'g#<\(input\|select\|textarea\|/\=form\)\>#p'|redir END ||
+| :nmap ,z :redir @\*\<Bar\>sil exec ||
+| 'g@<\(input\\\<Bar\>select\\\<Bar\>textarea\\\<Bar\>/\=form\)\>@p'\<Bar\>redir END\<CR\> ||
+
+Substitute string in column 30 
+----------------
+|||
+|---|---|
+:%s/^\(.\{30\}\)xx/\1yy/
+
+Decrement numbers by 3
+------------------------
+|||
+|---|---|
+| :%s/\d\+/\=(submatch(0)-3)/ ||
+
+Increment numbers by 6 on certain lines only
+----------------
+|||
+|---|---|
+| :g/loc\|function/s/\d/\=submatch(0)+6/ ||
+
+Better
+------
+|||
+|---|---|
+| :%s#txtdev\zs\d#\=submatch(0)+1#g ||
+| :h /\zs ||
+
+Increment only numbers gg\d\d  by 6 (another way)
+----------------
+|||
+|---|---|
+| :%s/\(gg\)\@<=\d\+/\=submatch(0)+6/ ||
+| :h zero-width ||
+
+Rename a string with an incrementing number
+----------------
+|||
+|---|---|
+:let i=10 | 'a,'bg/Abc/s/yy/\=i/ |let i=i+1 # convert yy to 10,11,12 etc
+
+As above but more precise
+----------------
+|||
+|---|---|
+:let i=10 | 'a,'bg/Abc/s/xx\zsyy\ze/\=i/ |let i=i+1 # convert xxyy to xx11,xx12,xx13
+
+Find replacement text, put in memory, then use \zs to simplify substitute
+----------------
+|||
+|---|---|
+| :%s/"\([^.]\+\).\*\zsxx/\1/ ||
+
+Pull word under cursor into LHS of a substitute
+----------------
+|||
+|---|---|
+| :nmap <leader>z :%s#\<<c-r>=expand("<cword>")<cr>\># ||
+
+Pull Visually Highlighted text into LHS of a substitute
+----------------
+|||
+|---|---|
+| :vmap <leader>z :<C-U>%s/\<<c-r>\*\>/ ||
+
+Substitute singular or plural
+----------------
+|||
+|---|---|
+| :'a,'bs/bucket\(s\)\*/bowl\1/gic ||
+
+All following performing similar task, substitute within substitution
+--------------
 " Multiple single character substitution in a portion of line only
 ----------------
-:%s,\(all/.*\)\@<=/,_,g     : replace all / with _ AFTER "all/"
-" Same thing
+|||
+|---|---|
+| :%s,\(all/.\*\)\@<=/,\_,g     | replace all / with _ AFTER "all/" |
+
+Same thing
 ----------------
-:s#all/\zs.*#\=substitute(submatch(0), '/', '_', 'g')#
-" Substitute by splitting line, then re-joining
-:s#all/#&^M#|s#/#_#g|-j!
-" Substitute inside substitute
-:%s/.*/\='cp '.submatch(0).' all/'.substitute(submatch(0),'/','_','g')/
-----------------------------------------
-" *best-global* command 
+:s#all/\zs.\*#\=substitute(submatch(0), '/', '\_', 'g')#
+
+Substitute by splitting line, then re-joining
+-----------------
+:s#all/#&^M#|s#/#\_#g|-j!
+
+Substitute inside substitute
+------------------
+:%s/.\*/\='cp '.submatch(0).' all/'.substitute(submatch(0),'/','\_','g')/
+
+\*best-global\* command 
 ----------------
-:g/gladiolli/#              : display with line numbers (YOU WANT THIS!)
-:g/fred.*joe.*dick/         : display all lines fred,joe & dick
-:g/\<fred\>/                : display all lines fred but not freddy
-:g/^\s*$/d                  : delete all blank lines
-:g!/^dd/d                   : delete lines not containing string
-:v/^dd/d                    : delete lines not containing string
-:g/joe/,/fred/d             : not line based (very powerfull)
-:g/fred/,/joe/j             : Join Lines [N]
-:g/-------/.-10,.d          : Delete string & 10 previous lines
-:g/{/ ,/}/- s/\n\+/\r/g     : Delete empty lines but only between {...}
+| :g/gladiolli/#              | display with line numbers (YOU WANT THIS!) |
+| :g/fred.\*joe.\*dick/       | display all lines fred,joe & dick |
+| :g/\<fred\>/                | display all lines fred but not freddy |
+| :g/^\s\*$/d                 | delete all blank lines |
+| :g!/^dd/d                   | delete lines not containing string |
+| :v/^dd/d                    | delete lines not containing string |
+| :g/joe/,/fred/d             | not line based (very powerfull) |
+| :g/fred/,/joe/j             | Join Lines |
+| :g/-------/.-10,.d          | Delete string & 10 previous lines |
+| :g/{/ ,/}/- s/\n\+/\r/g     : Delete empty lines but only between {...}
 :v/\S/d                     : Delete empty lines (and blank lines ie whitespace)
 :v/./,/./-j                 : compress empty lines
 :g/^$/,/./-j                : compress empty lines
