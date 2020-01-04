@@ -143,51 +143,43 @@ Duplicating columns
 
 Memory
 ------
-|||
-|----|---|
-| `:%s#example#& = &#gic`         | duplicate entire matched string |
-| `:%s#.*\(tbl\_\w\+\).*#\1#`   | extract list of all strings tbl\_\* from text |
-| `:s/\(.*\):\(.*\)/\2 : \1/`   | reverse fields separated by : |
-| `:%s/^\(.*\)\n\1$/\1/`         | delete duplicate lines |
-| `:%s/^\(.*\)\(\n\1\)\+$/\1/`   | delete multiple duplicate lines |
+|                              |                                               |
+|------------------------------|-----------------------------------------------|
+| `:%s#example#& = &#gic`      | duplicate entire matched string               |
+| `:%s#.*\(tbl_\w\+\).*#\1#`   | extract list of all strings tbl\_\* from text |
+| `:s/\(.*\):\(.*\)/\2 : \1/`  | reverse fields separated by :                 |
+| `:%s/^\(.*\)\n\1$/\1/`       | delete duplicate lines                        |
+| `:%s/^\(.*\)\(\n\1\)\+$/\1/` | delete multiple duplicate lines               |
 
 Non-greedy matching \{-}
 ------------------------
-
-|||
-|---|---|
-| :%s/^.\{-}pdf/new.pdf/      | delete to 1st occurence of pdf only (non-greedy) |
-| %s#^.\{-}\([0-9]\{3,4\}serial\)#\1#gic | delete up to 123serial or 1234serial |
+|                                          |                                                  |
+|------------------------------------------|--------------------------------------------------|
+| `:%s/^.\{-}pdf/new.pdf/`                 | delete to 1st occurence of pdf only (non-greedy) |
+| `%s#^.\{-}\([0-9]\{3,4\}serial\)#\1#gic` | delete up to 123serial or 1234serial             |
 
 Use of optional atom \\?
 ------------------------
-
-|||
-|---|---|
-| :%s#\<[zy]\?tbl\_[a-z\_]\+\>#\L&#gc | lowercase with optional leading characters |
+|                                       |                                            |
+|---------------------------------------|--------------------------------------------|
+| `:%s#\<[zy]\?tbl\_[a-z\_]\+\>#\L&#gc` | lowercase with optional leading characters |
 
 Over possibly many lines
-----------------
-|||
-|---|---|
-| :%s/\<!--\_.\{-}--\>//      | delete possibly multi-line comments |
-| :help /\{-}                 | help non-greedy |
+------------------------
+|                          |                                     |
+|--------------------------|-------------------------------------|
+| `:%s/<!--\_.\{-}-->//`   | delete possibly multi-line comments |
+| `:help /\{-}`            | help non-greedy                     |
 
 Substitute using a register
 ---------------------------
-|||
-|---|---|
-| :s/fred/\<c-r\>a/g            | sub "fred" with contents of register "a" |
-| :s/fred/\<c-r\>asome\_text<c-r>s/g  ||
-| :s/fred/\=@a/g              | better alternative as register not displayed (not \*) |
-| :s/fred/\=@\*/g              | replace string with contents of paste register |
+|                                       |                                                       |
+|---------------------------------------|-------------------------------------------------------|
+| `:s/fred/\<c-r\>a/g`                  | sub "fred" with contents of register "a"              |
+| `:s/fred/\<c-r\>asome\_text<c-r>s/g`  |                                                       |
+| `:s/fred/\=@a/g`                      | better alternative as register not displayed (not \*) |
+| `:s/fred/\=@*/g`                      | replace string with contents of paste register        |
 
-Multiple commands on one line
------------------------------
-|||
-|---|---|
-| :%s/\f\+\.gif\>/\r&\r/g | v/\.gif$/d | %s/gif/jpg/
-| :%s/a/but/gie|:update|:next | then use @: to repeat |
 
 ORing
 -------
