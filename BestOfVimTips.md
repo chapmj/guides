@@ -250,28 +250,34 @@ Combining g// with normal mode commands
 :g/|/norm 2f|r\*                      : replace 2nd | with a star
 "send output of previous global command to a new window
 :nmap <F3>  :redir @a<CR>:g//<CR>:redir END<CR>:new<CR>:put! a<CR><CR>
-"----------------------------------------
-" *Best-Global-combined-with-substitute* (*power-editing*)
+
+Best-Global-combined-with-substitute 
+----------------------------------------
 :'a,'bg/fred/s/joe/susan/gic :  can use memory to extend matching
 :/fred/,/joe/s/fred/joe/gic :  non-line based (ultra)
 :/biz/,/any/g/article/s/wheel/bucket/gic:  non-line based [N]
+
+Find fred before beginning search for joe
 ----------------------------------------
-" Find fred before beginning search for joe
 :/fred/;/joe/-2,/sid/+3s/sally/alley/gIC
-"----------------------------------------
-" create a new file for each line of file eg 1.txt,2.txt,3,txt etc
+
+Create a new file for each line of file eg 1.txt,2.txt,3,txt etc
+----------------------------------------
 :g/^/exe ".w ".line(".").".txt"
-"----------------------------------------
-" chain an external command
+
+Chain an external command
+----------------------------------------
 :.g/^/ exe ".!sed 's/N/X/'" | s/I/Q/    [N]
-"----------------------------------------
-" Operate until string found [N]
+
+Operate until string found [N]
+----------------------------------------
 d/fred/                                :delete until fred
 y/fred/                                :yank until fred
 c/fred/e                               :change until fred end
 v12|                                   : visualise/change/delete to column 12 [N]
-"----------------------------------------
-" Summary of editing repeats [N]
+
+Summary of editing repeats [N]
+----------------------------------------
 .      last edit (magic dot)
 :&     last substitute
 :%&    last substitute every line
@@ -283,14 +289,15 @@ g&     last substitute on all lines
 :!!    last :! command
 :~     last substitute
 :help repeating
+
+Summary of repeated searches
 ----------------------------------------
-" Summary of repeated searches
 ;      last f, t, F or T
 ,      last f, t, F or T in opposite direction
 n      last / or ? search
 N      last / or ? search in opposite direction
-----------------------------------------
-" *Absolutely-essential*
+
+Absolutely-essential
 ----------------------------------------
 * # g* g#           : find word under cursor (<cword>) (forwards/backwards)
 %                   : match brackets {}[]()
@@ -308,8 +315,8 @@ matchit.vim         : % now matches tags <tr><td><script> <?php etc
 :syntax sync fromstart  : Fix syntax highlighting [N]
 :h regexp<C-D>      : type control-D and get a list all help topics containing
                       regexp (plus use TAB to Step thru list)
+MAKE IT EASY TO UPDATE/RELOAD _vimrc
 ----------------------------------------
-" MAKE IT EASY TO UPDATE/RELOAD _vimrc
 :nmap ,s :source $VIM/_vimrc
 :nmap ,v :e $VIM/_vimrc
 :e $MYVIMRC         : edits your _vimrc whereever it might be  [N]
@@ -319,15 +326,19 @@ ab mypc vista
 else
 ab mypc dell25
 endif
+
+Splitting windows
 ----------------------------------------
-" splitting windows
 :vsplit other.php       # vertically split current file with other.php [N]
+
+VISUAL MODE (easy to add other HTML Tags)
 ----------------------------------------
-"VISUAL MODE (easy to add other HTML Tags)
+
 :vmap sb "zdi<b><C-R>z</b><ESC>  : wrap <b></b> around VISUALLY selected Text
 :vmap st "zdi<?= <C-R>z ?><ESC>  : wrap <?=   ?> around VISUALLY selected Text
-----------------------------------------
-"vim 7 tabs
+
+vim 7 tabs
+----------
 vim -p fred.php joe.php             : open files in tabs
 :tabe fred.php                      : open fred.php in a new tab
 :tab ball                           : tab open files
@@ -336,8 +347,9 @@ vim -p fred.php joe.php             : open files in tabs
 :nnoremap gf <C-W>gf
 :cab      e  tabe
 :tab sball                           : retab all files in buffer (repair) [N]
-----------------------------------------
-" Exploring
+
+Exploring
+---------
 :e .                            : file explorer
 :Exp(lore)                      : file explorer note capital Ex
 :Sex(plore)                     : file explorer in split window
@@ -350,8 +362,8 @@ vim -p fred.php joe.php             : open files in tabs
 :lcd %:p:h                      : change to directory of current file
 :cd  %:p:h                      : change to directory of current file [N]
 :autocmd BufEnter * lcd %:p:h   : change to directory of current file automatically (put in _vimrc)
-----------------------------------------
-" Changing Case
+Changing Case
+-------------
 guu                             : lowercase line
 gUU                             : uppercase line
 Vu                              : lowercase line
@@ -360,15 +372,20 @@ g~~                             : flip case line
 vEU                             : Upper Case Word
 vE~                             : Flip Case Word
 ggguG                           : lowercase entire file
-" Titlise Visually Selected Text (map for .vimrc)
+
+Titlise Visually Selected Text (map for .vimrc)
+------
 vmap ,c :s/\<\(.\)\(\k*\)\>/\u\1\L\2/g<CR>
-" Title Case A Line Or Selection (better)
+Title Case A Line Or Selection (better)
+------
 vnoremap <F6> :s/\%V\<\(\w\)\(\w*\)\>/\u\1\L\2/ge<cr> [N]
-" titlise a line
+
+Titlise a line
+--------------
 nmap ,t :s/.*/\L&/<bar>:s/\<./\u&/g<cr>  [N]
-" Uppercase first letter of sentences
+Uppercase first letter of sentences
+--------------
 :%s/[.!?]\_s\+\a/\U&\E/g
-----------------------------------------
 gf                              : open file name under cursor (SUPER)
 :nnoremap gF :view <cfile><cr>  : open file under cursor, create if necessary
 ga                              : display hex,ascii value of char under cursor
@@ -379,19 +396,16 @@ ggg?G                           : rot13 whole file (quicker for large file)
 <C-A>,<C-X>                     : increment,decrement number under cursor
                                   win32 users must remap CNTRL-A
 <C-R>=5*5                       : insert 25 into text (mini-calculator)
+
+Disguise text (watch out)
 ----------------------------------------
-" Make all other tips superfluous
-:h 42            : also http://www.google.com/search?q=42
-:h holy-grail
-:h!
-----------------------------------------
-" disguise text (watch out) [N]
 ggVGg?                          : rot13 whole file (toggles)
 :set rl!                        : reverse lines right to left (toggles)
 :g/^/m0                         : reverse lines top to bottom (toggles)
 :%s/\(\<.\{-}\>\)/\=join(reverse(split(submatch(1), '.\zs')), '')/g   : reverse all text *N*
+
+History, Markers & moving about (what Vim Remembers) [C]
 ----------------------------------------
-" History, Markers & moving about (what Vim Remembers) [C]
 '.               : jump to last modification line (SUPER)
 `.               : jump to exact spot in last modification line
 g;               : cycle thru recent changes (oldest first)
@@ -408,68 +422,86 @@ g,               : reverse direction
 q/               : Search history Window (puts you in full edit mode) (exit CTRL-C)
 q:               : commandline history Window (puts you in full edit mode) (exit CTRL-C)
 :<C-F>           : history Window (exit CTRL-C)
-----------------------------------------
-" Abbreviations & Maps
-" Maps are commands put onto keys, abbreviations expand typed text [N]
-" Following 4 maps enable text transfer between VIM sessions
+
+Abbreviations and Maps
+-------------
 :map   <f7>   :'a,'bw! c:/aaa/x       : save text to file x
 :map   <f8>   :r c:/aaa/x             : retrieve text 
 :map   <f11>  :.w! c:/aaa/xr<CR>      : store current line
 :map   <f12>  :r c:/aaa/xr<CR>        : retrieve current line
 :ab php          : list of abbreviations beginning php
 :map ,           : list of maps beginning ,
-" allow use of F10 for mapping (win32)
+
+allow use of F10 for mapping (win32)
+----------------
 set wak=no       : :h winaltkeys
-" For use in Maps
+
+For use in Maps
+---------------
 <CR>             : carriage Return for maps
 <ESC>            : Escape
 <LEADER>         : normally \
 <BAR>            : | pipe
 <BACKSPACE>      : backspace
 <SILENT>         : No hanging shell window
-"display RGB colour under the cursor eg #445588
+
+Display RGB colour under the cursor eg #445588
+----------
 :nmap <leader>c :hi Normal guibg=#<c-r>=expand("<cword>")<cr><cr>
 map <f2> /price only\\|versus/ :in a map need to backslash the \
-" type table,,, to get <table></table>       ### Cool ###
+
+Type table,,, to get <table></table>       ### Cool ###
+---------
 imap ,,, <esc>bdwa<<esc>pa><cr></<esc>pa><esc>kA
-" list current mappings of all your function keys
+
+List current mappings of all your function keys
+---------
 :for i in range(1, 12) | execute("map <F".i.">") | endfor   [N]
-" for your .vimrc
+
+For your .vimrc
+-----------------
 :cab ,f :for i in range(1, 12) \| execute("map <F".i.">") \| endfor
-"chain commands in abbreviation
+
+Chain commands in abbreviation
+-----------------
 cabbrev vrep tabe class.inc \| tabe report.php   ## chain commands [N]
+
+Using a register as a map (preload registers in .vimrc)
 ----------------------------------------
-" Simple PHP debugging display all variables yanked into register a
-iab phpdb exit("<hr>Debug <C-R>a  ");
-----------------------------------------
-" Using a register as a map (preload registers in .vimrc)
 :let @m=":'a,'bs/"
 :let @s=":%!sort -u"
-----------------------------------------
-" Useful tricks
+
+Useful tricks
+-------------
 "ayy@a           : execute "Vim command" in a text file
 yy@"             : same thing using unnamed register
 u@.              : execute command JUST typed in
 "ddw             : store what you delete in register d [N]
 "ccaw            : store what you change in register c [N]
+
+Get output from other commands (requires external programs)
 ----------------------------------------
-" Get output from other commands (requires external programs)
 :r!ls -R         : reads in output of ls
 :put=glob('**')  : same as above                 [N]
 :r !grep "^ebay" file.txt  : grepping in content   [N]
 :20,25 !rot13    : rot13 lines 20 to 25   [N]
 !!date           : same thing (but replaces/filters current line)
-" Sorting with external sort
+
+Sorting with external sort
+--------------------------
 :%!sort -u       : use an external program to filter content
 :'a,'b!sort -u   : use an external program to filter content
 !1} sort -u      : sorts paragraph (note normal mode!!)
 :g/^$/;/^$/-1!sort : Sort each block (note the crucial ;)
-" Sorting with internal sort
+
+Sorting with internal sort
+--------------------------
 :sort /.*\%2v/   : sort all lines on second column [N]
 " number lines  (linux or cygwin only)
 :new | r!nl #                  [N]
-----------------------------------------
-" Multiple Files Management (Essential)
+
+Multiple Files Management 
+-------------------------
 :bn              : goto next buffer
 :bp              : goto previous buffer
 :wn              : save file and move to next (super)
@@ -497,26 +529,32 @@ u@.              : execute command JUST typed in
 :map   <F5> :ls<CR>:e # : Pressing F5 lists all buffer, just type number
 :set hidden      : Allows to change buffer w/o saving current buffer
 :w !sudo tee %   : Write to read only file on linux (trick) [N]
-----------------------------------------
-" Quick jumping between splits
+Quick jumping between splits
+----------------------------
 map <C-J> <C-W>j<C-W>_
 map <C-K> <C-W>k<C-W>_
-----------------------------------------
-" Recording (BEST Feature of ALL)
+
+Recording 
+---------
 qq  # record to q
-your complex series of commands
 q   # end recording
 @q to execute
 @@ to Repeat
 5@@ to Repeat 5 times
 qQ@qq                             : Make an existing recording q recursive [N]
-" editing a register/recording
+
+Editing a register/recording
+----------------------------
 "qp                               :display contents of register q (normal mode)
 <ctrl-R>q                         :display contents of register q (insert mode)
-" you can now see recording contents, edit as required
+
+You can now see recording contents, edit as required
+-----------------
 "qdd                              :put changed contacts back into q
 @q                                :execute recording/register q
-" Operating a Recording on a Visual BLOCK (blockwise)
+
+Operating a Recording on a Visual BLOCK (blockwise)
+-------------------
 1) define recording/register
 qq:s/ to/ from/g^Mq
 2) Define Visual BLOCK
@@ -525,74 +563,60 @@ V}
 :'<,'>
 4)Complete as follows
 :'<,'>norm @q
-----------------------------------------
-"combining a recording with a map (to end up in command mode)
-"here we operate on a file with a recording, then move to the next file [N]
-:nnoremap ] @q:update<bar>bd
-----------------------------------------
-" Visual is the newest and usually the most intuitive editing mode
-" Visual basics
+
+Visual basics
+-------------
 v                               : enter visual mode
 V                               : visual mode whole line
 <C-V>                           : enter VISUAL BLOCKWISE mode (remap on Windows to say C-Q *C*
 gv                              : reselect last visual area (ultra)
 o                               : navigate visual area
-"*y or "+y                      : yank visual area into paste buffer  [C]
+"*y or "+y                      : yank visual area into paste buffer
 V%                              : visualise what you match
 V}J                             : Join Visual block (great)
 V}gJ                            : Join Visual block w/o adding spaces
 `[v`]                           : Highlight last insert
-:%s/\%Vold/new/g                : Do a substitute on last visual area [N]
-----------------------------------------
-" Delete 8th and 9th characters of 10 successive lines [C]
-08l<c-v>10j2ld  (use Control Q on win32) [C]
-----------------------------------------
-" how to copy a set of columns using VISUAL BLOCK
-" visual block (AKA columnwise selection) (NOT BY ordinary v command)
-<C-V> then select "column(s)" with motion commands (win32 <C-Q>)
-then c,d,y,r etc
-----------------------------------------
-" how to overwrite a visual-block of text with another such block [C]
-" move with hjkl etc
-Pick the first block: ctrl-v move y
-Pick the second block: ctrl-v move P <esc>
-----------------------------------------
-" text objects :h text-objects                                     [C]
+:%s/\%Vold/new/g                : Do a substitute on last visual area
+
+Text objects :h text-objects
+---
 daW                                   : delete contiguous non whitespace
 di<   yi<  ci<                        : Delete/Yank/Change HTML tag contents
 da<   ya<  ca<                        : Delete/Yank/Change whole HTML tag
 dat   dit                             : Delete HTML tag pair
 diB   daB                             : Empty a function {}
 das                                   : delete a sentence
-----------------------------------------
-" _vimrc essentials
-:imap <TAB> <C-N>                     : set tab to complete [N]
+
+vimrc essentials
+----------------
+:imap <TAB> <C-N>                     : set tab to complete
 :set incsearch : jumps to search word as you type (annoying but excellent)
 :set wildignore=*.o,*.obj,*.bak,*.exe : tab complete now ignores these
 :set shiftwidth=3                     : for shift/tabbing
 :set vb t_vb=".                       : set silent (no beep)
 :set browsedir=buffer                 : Maki GUI File Open use current directory
+set iminsert=0  (or toggle CTRL-shift-^)    : reset "stuck" caps lock/capslock key
+
+Launching Win IE
 ----------------------------------------
-set iminsert=0  (or toggle CTRL-shift-^)    : reset "stuck" caps lock/capslock key [N]
-----------------------------------------
-" launching Win IE
 :nmap ,f :update<CR>:silent !start c:\progra~1\intern~1\iexplore.exe file://%:p<CR>
 :nmap ,i :update<CR>: !start c:\progra~1\intern~1\iexplore.exe <cWORD><CR>
-----------------------------------------
-" FTPing from VIM
+
+FTPing from VIM
+---------------
 cmap ,r  :Nread ftp://209.51.134.122/public_html/index.html
 cmap ,w  :Nwrite ftp://209.51.134.122/public_html/index.html
 gvim ftp://www.somedomain.com/index.html # uses netrw.vim
-----------------------------------------
-" appending to registers (use CAPITAL)
-" yank 5 lines into "a" then add a further 5
+
+Appending to registers (use CAPITAL)
+------------------------------------
 "a5yy
 10j
 "A5yy
-----------------------------------------
 [I     : show lines matching word under cursor <cword> (super)
-----------------------------------------
-" Conventional Shifting/Indenting
+
+Conventional Shifting/Indenting
+-------------------------------
 :'a,'b>>
 " visual shifting (builtin-repeat)
 :vnoremap < <gv
@@ -603,104 +627,83 @@ gvim ftp://www.somedomain.com/index.html # uses netrw.vim
 " also
 >% and <%
 ==                            : index current line same as line above [N]
+
+Redirection & Paste register
 ----------------------------------------
-" Redirection & Paste register *
 :redir @*                    : redirect commands to paste buffer
 :redir END                   : end redirect
 :redir >> out.txt            : redirect to a file
 " Working with Paste buffer
 "*yy                         : yank current line to paste
 "*p                          : insert from paste buffer
-" yank to paste buffer (ex mode)
+
+Yank to paste buffer (ex mode)
+-------------
 :'a,'by*                     : Yank range into paste
 :%y*                         : Yank whole buffer into paste
 :.y*                         : Yank Current line to paster
-" filter non-printable characters from the paste buffer
-" useful when pasting from some gui application
-:nmap <leader>p :let @* = substitute(@*,'[^[:print:]]','','g')<cr>"*p
+
 :set paste                    : prevent vim from formatting pasted in text *N*
-----------------------------------------
-" Re-Formatting text
+
+Reformatting text
+------------------
 gq}                          : Format a paragraph
 gqap                         : Format a paragraph
 ggVGgq                       : Reformat entire file
 Vgq                          : current line
-" break lines at 70 chars, if possible after a ;
-:s/.\{,69\};\s*\|.\{,69\}\s\+/&\r/g
-:set columns=132
-:set textwidth=132
+
+Operate command over multiple files
 ----------------------------------------
-" Operate command over multiple files
 :argdo %s/foo/bar/gec        : operate on all files in :args
 :bufdo %s/foo/bar/gec
 :windo %s/foo/bar/gec
 :argdo exe '%!sort'|w!       : include an external command
 :bufdo exe "normal @q" | w   : perform a recording on open files
 :silent bufdo !zip proj.zip %:p   : zip all current files
-----------------------------------------
-" Command line tricks
-gvim -h                    : help
-ls | gvim -                : edit a stream!!
-cat xx | gvim - -c "v/^\d\d\|^[3-9]/d " : filter a stream
-gvim -o file1 file2        : open into a horizontal split (file1 on top, file2 on bottom) [C]
-gvim -O file1 file2        : open into a vertical split (side by side,for comparing code) [N]
-" execute one command after opening file
-gvim.exe -c "/main" joe.c  : Open joe.c & jump to "main"
-" execute multiple command on a single file
-vim -c "%s/ABC/DEF/ge | update" file1.c
-" execute multiple command on a group of files
-vim -c "argdo %s/ABC/DEF/ge | update" *.c
-" remove blocks of text from a series of files
-vim -c "argdo /begin/+1,/end/-1g/^/d | update" *.c
-" Automate editing of a file (Ex commands in convert.vim)
+
+Automate editing of a file (Ex commands in convert.vim)
+------
 vim -s "convert.vim" file.c
-"load VIM without .vimrc and plugins (clean VIM) e.g. for HUGE files
-gvim -u NONE -U NONE -N hugefile.txt
-" Access paste buffer contents (put in a script/batch file)
-gvim -c 'normal ggdG"*p' c:/aaa/xp
-" print paste contents to default printer
-gvim -c 's/^/\=@*/|hardcopy!|q!'
-" gvim's use of external grep (win32 or *nix)
-:!grep somestring *.php     : creates a list of all matching files [C]
+
 " use :cn(ext) :cp(rev) to navigate list
 :h grep
-" Using vimgrep with copen                              [N]
+
+Using vimgrep with copen                              [N]
+-------
 :vimgrep /keywords/ *.php
 :copen
-----------------------------------------
-" GVIM Difference Function (Brilliant)
-gvim -d file1 file2        : vimdiff (compare differences)
-dp                         : "put" difference under cursor to other file
-do                         : "get" difference under cursor from other file
-[c                         : jump backwards to change
-]c                         : jump forwards to change
-:set diffopt+=icase        : switch case sensitivity on and off
-" complex diff parts of same file [N]
+
+Complex diff parts of same file [N]
+--------
 :1,2yank a | 7,8yank b
 :tabedit | put a | vnew | put b
 :windo diffthis 
-----------------------------------------
-" Vim traps
+
+Vim traps
+---------
 In regular expressions you must backslash + (match 1 or more)
 In regular expressions you must backslash | (or)
 In regular expressions you must backslash ( (group)
 In regular expressions you must backslash { (count)
 /fred\+/                   : matches fred/freddy but not free
 /\(fred\)\{2,3}/           : note what you have to break
+
+\\v or very magic (usually) reduces backslashing
 ----------------------------------------
-" \v or very magic (usually) reduces backslashing
 /codes\(\n\|\s\)*where  : normal regexp
 /\vcodes(\n|\s)*where   : very magic
+
+Pulling objects onto command/search line
 ----------------------------------------
-" pulling objects onto command/search line (SUPER)
 <C-R><C-W> : pull word under the cursor into a command line or search
 <C-R><C-A> : pull WORD under the cursor into a command line or search
 <C-R>-                  : pull small register (also insert mode)
 <C-R>[0-9a-z]           : pull named registers (also insert mode)
 <C-R>%                  : pull file name (also #) (also insert mode)
 <C-R>=somevar           : pull contents of a variable (eg :let sray="ray[0-9]")
-----------------------------------------
-" List your Registers
+
+List your Registers
+-------------------
 :reg             : display contents of all registers
 :reg a           : display content of register a
 :reg 12a         : display content of registers 1,2 & a [N]
@@ -709,115 +712,85 @@ In regular expressions you must backslash { (count)
 :let @y='yy@"'   : pre-loading registers (put in .vimrc)
 qqq              : empty register "q"
 qaq              : empty register "a"
-:reg .-/%:*"     : the seven special registers [N]
-:reg 0           : what you last yanked, not affected by a delete [N]
-"_dd             : Delete to blackhole register "_ , don't affect any register [N]
-----------------------------------------
-" manipulating registers
+:reg .-/%:*"     : the seven special registers
+:reg 0           : what you last yanked, not affected by a delete
+"_dd             : Delete to blackhole register "_ , don't affect any register
+
+Manipulating registers
+----------------------
 :let @a=@_              : clear register a
 :let @a=""              : clear register a
-:let @a=@"              : Save unnamed register [N]
+:let @a=@"              : Save unnamed register
 :let @*=@a              : copy register a to paste buffer
 :let @*=@:              : copy last command to paste buffer
 :let @*=@/              : copy last search to paste buffer
 :let @*=@%              : copy current filename to paste buffer
-----------------------------------------
-" help for help (USE TAB)
-:h quickref             : VIM Quick Reference Sheet (ultra)
-:h tips                 : Vim's own Tips Help
-:h visual<C-D><tab>     : obtain  list of all visual help topics
-                        : Then use tab to step thru them
-:h ctrl<C-D>            : list help of all control keys
-:helpg uganda           : grep HELP Files use :cn, :cp to find next
-:helpgrep edit.*director: grep help using regexp
-:h :r                   : help for :ex command
-:h CTRL-R               : normal mode
-:h /\r                  : what's \r in a regexp (matches a <CR>)
-:h \\zs                 : double up backslash to find \zs in help
-:h i_CTRL-R             : help for say <C-R> in insert mode
-:h c_CTRL-R             : help for say <C-R> in command mode
-:h v_CTRL-V             : visual mode
-:h tutor                : VIM Tutor
-<C-]>                   : jump to {keyword} under  cursor in help file [C]
-<C-[>, <C-T>            : Move back & Forth in HELP History
-gvim -h                 : VIM Command Line Help
-:cabbrev h tab help     : open help in a tab [N]
-----------------------------------------
-" where was an option set
+
+Where was an option set
+-----------------------
 :scriptnames            : list all plugins, _vimrcs loaded (super)
 :verbose set history?   : reveals value of history and where set
 :function               : list functions
 :func SearchCompl       : List particular function
-----------------------------------------
-" install a plugin (windows) [N]
-extract plugin hierarchy to c:/vim/vim80/
-:helptags $VIMRUNTIME/doc    : regenerate doc
-----------------------------------------
-" making your own VIM help
-:helptags /vim/vim64/doc  : rebuild all *.txt help files in /doc
-:help add-local-help
-" save this page as a VIM Help File [N]
+
+Save this page as a VIM Help File
+---------------------------------
 :sav! $VIMRUNTIME/doc/vimtips.txt|:1,/^__BEGIN__/d|:/^__END__/,$d|:w!|:helptags $VIMRUNTIME/doc
+
+Capturing output of current script in a separate buffer
 ----------------------------------------
-" running file thru an external program (eg php)
-map   <f9>   :update<CR>:!c:/php/php.exe %<CR>
-map   <f2>   :update<CR>:!perl -c %<CR>
-----------------------------------------
-" capturing output of current script in a separate buffer
 :new | r!perl #                   : opens new buffer,read other buffer
 :new! x.out | r!perl #            : same with named file
 :new+read!ls
+
+Create a new buffer, paste a register "q" into it, then sort new buffer
 ----------------------------------------
-" create a new buffer, paste a register "q" into it, then sort new buffer
 :new +put q|%!sort
+
+Inserting DOS Carriage Returns
 ----------------------------------------
-" Inserting DOS Carriage Returns
 :%s/$/\<C-V><C-M>&/g          :  that's what you type
 :%s/$/\<C-Q><C-M>&/g          :  for Win32
 :%s/$/\^M&/g                  :  what you'll see where ^M is ONE character
+
+Automatically delete trailing Dos-returns,whitespace
 ----------------------------------------
-" automatically delete trailing Dos-returns,whitespace
 autocmd BufRead * silent! %s/[\r \t]\+$//
 autocmd BufEnter *.php :%s/[ \t\r]\+$//e
+
+Perform an action on a particular file or file type
 ----------------------------------------
-" perform an action on a particular file or file type
 autocmd VimEnter c:/intranet/note011.txt normal! ggVGg?
 autocmd FileType *.pl exec('set fileformats=unix')
+
+Retrieving last command line command for copy & pasting into text
 ----------------------------------------
-" Retrieving last command line command for copy & pasting into text
 i<c-r>:
 " Retrieving last Search Command for copy & pasting into text
 i<c-r>/
-----------------------------------------
-" more completions
+
+More completions
+----------------
 <C-X><C-F>                        :insert name of a file in current directory
-----------------------------------------
-" Substituting a Visual area
-" select visual area as usual (:h visual) then type :s/Emacs/Vim/ etc
+
+Substituting a Visual area
+--------------------------
 :'<,'>s/Emacs/Vim/g               : REMEMBER you dont type the '<.'>
 gv                                : Re-select the previous visual area (ULTRA)
-----------------------------------------
-" inserting line number into file
+
+Inserting line number into file
+-------------------------------
 :g/^/exec "s/^/".strpart(line(".")."    ", 0, 4)
 :%s/^/\=strpart(line(".")."     ", 0, 5)
 :%s/^/\=line('.'). ' '
-----------------------------------------
-" *numbering lines VIM way*
+Numbering lines VIM way
+-----------------------
 :set number                       : show line numbers
 :map <F12> :set number!<CR>       : Show linenumbers flip-flop
 :%s/^/\=strpart(line('.')."        ",0,&ts)
-" numbering lines (need Perl on PC) starting from arbitrary number
-:'a,'b!perl -pne 'BEGIN{$a=223} substr($_,2,0)=$a++'
-" Produce a list of numbers
-" Type in number on line say 223 in an empty file
-qqmnYP`n^Aq                       : in recording q repeat with @q
-" increment existing numbers to end of file (type <c-a> as 5 characters)
-:.,$g/^\d/exe "normal! \<c-a>"
-" advanced incrementing
-http://vim.sourceforge.net/tip_view.php?tip_id=150
+
+Advanced incrementing (vimrc)
 ----------------------------------------
-" *advanced incrementing* (really useful)
-" put following in _vimrc
 let g:I=0
 function! INC(increment)
 let g:I =g:I + a:increment
@@ -835,37 +808,22 @@ Generate a list of numbers  23-64
 o23<ESC>qqYp<C-A>q40@q
 unmap =                           : get the original vim command on a mapped key [N]
 
-Editing/moving within current insert (Really useful)
+Editing/moving within current insert 
 ----------------------------------------
 <C-U>                             : delete all entered
 <C-W>                             : delete last word
 <HOME><END>                       : beginning/end of line
 <C-LEFTARROW><C-RIGHTARROW>       : jump one word backwards/forwards
 <C-X><C-E>,<C-X><C-Y>             : scroll while staying put in insert
+
+Encryption (use with care: DON'T FORGET your KEY)
 ----------------------------------------
-#encryption (use with care: DON'T FORGET your KEY)
 :X                                : you will be prompted for a key
 :h :X
-----------------------------------------
-" modeline (make a file readonly etc) must be in first/last 5 lines
-// vim:noai:ts=2:sw=4:readonly:
-" vim:ft=html:                    : says use HTML Syntax highlighting
-:h modeline
 
-Creating your own GUI Toolbar entry
-----------------------------------------
-amenu  Modeline.Insert\ a\ VIM\ modeline <Esc><Esc>ggOvim:ff=unix ts=4 ss=4<CR>vim60:fdm=marker<esc>gg
 
-Function to save word under cursor to a file
-------------------------------------------------
-function! SaveWord()
-   normal yiw
-   exe ':!echo '.@0.' >> word.txt'
-endfunction
-map ,p :call SaveWord()
-
+Delete duplicate lines
 ----------------------------------------
-" function to delete duplicate lines
 function! Del()
  if getline(".") == getline(line(".") - 1)
    norm dd
@@ -873,10 +831,10 @@ function! Del()
 endfunction
 
 :g/^/ call Del()
-----------------------------------------
-" Digraphs (non alpha-numerics)
+
+Digraphs (non alpha-numerics)
+-----------------------------
 :digraphs                         : display table
-:h dig                            : help
 i<C-K>e'                          : enters é
 i<C-V>233                         : enters é (Unix)
 i<C-Q>233                         : enters é (Win32)
@@ -894,11 +852,6 @@ Pull a non-ascii character onto search bar
 ------------------------------------------
 yl/<C-R>"                         :
 /[^a-zA-Z0-9_[:space:][:punct:]]  : search for all non-ascii
-All file completions grouped (for example main_c.c)
----------------------------------------------------
-:e main\_<tab>                     : tab completes
-gf                                 : open file under cursor  (normal)
-main\_<C-X><C-F>                   : include NAME of file in text (insert mode)
 
 Complex Vim
 -----------
@@ -915,34 +868,6 @@ Swap word with next word
 ------------------------
 nmap <silent> gw    "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<cr><c-o><c-l> [N]
 
-Convert Text File to HTML
--------------------------
-:runtime! syntax/2html.vim        : convert txt to html
-:h 2html
-:%TOhtml                          : convert current file to html [N]
-
-VIM has internal grep
-----------------------------------------
-:grep some_keyword *.c            : get list of all c-files containing keyword
-:cn                               : go to next occurrence
-
-Force Syntax coloring for a file that has no extension .pl
-----------------------------------------
-:set syntax=perl
-
-Remove syntax coloring (useful for all sorts of reasons)
---------------------------------------------------------
-:set syntax off
-
-Change coloring scheme (any file in ~vim/vim??/colors)
-------------------------------------------------------
-
-:colorscheme blue
-:colorscheme morning     : good fallback colorscheme *N*
-
-Force HTML Syntax highlighting by using a modeline
---------------------------------------------------
-# vim:ft=html:
 
 Force syntax automatically (for a file with non-standard extension)
 ---------------------------------------------------------------------
@@ -1066,10 +991,14 @@ Reproduce previous line word by word
 ------------------------------------
 imap ]  @@@<ESC>hhkyWjl?@@@<CR>P/@@@<CR>3s
 nmap ] i@@@<ESC>hhkyWjl?@@@<CR>P/@@@<CR>3s
-" Programming keys depending on file type
+
+Programming keys depending on file type
+-------
 :autocmd bufenter \*.tex map <F1> :!latex %<CR>
 :autocmd bufenter \*.tex map <F2> :!xdvi -hush %<.dvi&<CR>
-" allow yanking of php variables with their dollar [N]
+
+Allow yanking of php variables with their dollar [N]
+------
 :autocmd bufenter \*.php :set iskeyword+=\$ 
 
 Reading Ms-Word documents, requires antiword (not docx)
