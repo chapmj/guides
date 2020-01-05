@@ -2,26 +2,27 @@
 
 Searching
 ---------
-|                            |                                                      |
-|----------------------------|------------------------------------------------------|
-| `/joe/e`                   | Cursor set to End of match                           |
-| `3/joe/e+1`                | Find 3rd joe cursor set to End of match plus 1       |
-| `/joe/s-2`                 | Cursor set to Start of match minus 2                 |
-| `/joe/+3`                  | Find joe move cursor 3 lines down                    |
-| `/^joe.\*fred.\*bill/`     | Find joe AND fred AND Bill (Joe at start of line)    |
-| `/^[A-J]/`                 | Search for lines beginning with one or more A-J      |
-| `/begin\_.*end`            | Search over possible multiple lines                  |
-| `/fred\_s*joe/`            | Any whitespace including newline                     |
-| `/fred\|joe`               | Search for FRED OR JOE                               |
-| `/.*fred\&.*joe`           | Search for FRED AND JOE in any ORDER!                |
-| `/\<fred\>/`               | Search for fred but not alfred or frederick          |
-| `/\<\d\d\d\d\>`            | Search for exactly 4 digit numbers                   |
-| `/\D\d\d\d\d\D`            | Search for exactly 4 digit numbers                   |
-| `/\<\d\{4}\>`              | Search for exactly 4 digit numbers                   |
-| `/\([^0-9]\|^\)%.*%`       | Search for absence of a digit or beginning of line   |
-| `/^\n\{3}`                 | Find 3 empty lines                                   |
-| `/^str.*\nstr`             | Find 2 successive lines starting with str            |
-| `/\(^str.*\n)\{2}`         | Find 2 successive lines starting with str            |
+|                                            |                                                      |
+|--------------------------------------------|------------------------------------------------------|
+| `/joe/e`                                   | Cursor set to End of match                           |
+| `3/joe/e+1`                                | Find 3rd joe cursor set to End of match plus 1       |
+| `/joe/s-2`                                 | Cursor set to Start of match minus 2                 |
+| `/joe/+3`                                  | Find joe move cursor 3 lines down                    |
+| `/^joe.\*fred.\*bill/`                     | Find joe AND fred AND Bill (Joe at start of line)    |
+| `/^[A-J]/`                                 | Search for lines beginning with one or more A-J      |
+| `/begin\_.*end`                            | Search over possible multiple lines                  |
+| `/fred\_s*joe/`                            | Any whitespace including newline                     |
+| `/fred\|joe`                               | Search for FRED OR JOE                               |
+| `/.*fred\&.*joe`                           | Search for FRED AND JOE in any ORDER!                |
+| `/\<fred\>/`                               | Search for fred but not alfred or frederick          |
+| `/\<\d\d\d\d\>`                            | Search for exactly 4 digit numbers                   |
+| `/\D\d\d\d\d\D`                            | Search for exactly 4 digit numbers                   |
+| `/\<\d\{4}\>`                              | Search for exactly 4 digit numbers                   |
+| `/\([^0-9]\|^\)%.*%`                       | Search for absence of a digit or beginning of line   |
+| `/^\n\{3}`                                 | Find 3 empty lines                                   |
+| `/^str.*\nstr`                             | Find 2 successive lines starting with str            |
+| `/\(^str.*\n)\{2}`                         | Find 2 successive lines starting with str            |
+| `:/fred/;/joe/-2,/sid/+3s/sally/alley/gIC` | Find fred before beginning search for joe            |
 
 Regex
 -----
@@ -40,7 +41,6 @@ Visual searching
 
 Searching over multiple lines \_ means including newline
 --------------------------------------------------------
-
 |                         |                                         |
 |-------------------------|-----------------------------------------|
 | `/<!--\_p\{-}-->`       | search for multiple line comments       |
@@ -53,11 +53,6 @@ Search for declaration of subroutine/function under cursor
 |------------------------------------------------------|---|
 | `:nmap gx yiw/^\(sub\<bar>function\)\s\+<C-R>"<CR>`  |   |
 
-Multiple file search/operations
--------------------------------
-|                        |                                    |
-|------------------------|------------------------------------|
-| `:bufdo /searchstr/`   | use `:rewind` to recommence search |
 
 Multiple file search better but cheating
 ----------------------------------------
@@ -90,8 +85,8 @@ Find str but not on lines containing tongue
 | `'a,'bs/extrascost//gc`                  | trick: restrict search to between markers (answer n) |
 | `/integ<C-L>`                            | Control-L to complete search term                    |
 
-Best-substitution
------------------
+Substitution
+------------
 |||
 |---|---|
 | `:%s/fred/joe/igc`           | general substitute command                 |
@@ -124,7 +119,6 @@ Parse xml/soap
 | `:%s#\<\[^\/\]#\r&#gi`          | parse on open xml tag                             |
 | `:%s#\[\d\+\]#\r&#g`            | parse on numbered array elements [1]              |
 | `ggVGgJ`                        | rejoin XML without extra spaces (gJ)              |
-| `%s=\\n#\d=\r&=g`               | parse PHP error stack                             |
 | `:%s#^\[^\t\]\\+\\t##`          | Delete up to and including first tab              |
 
 VIM Power Substitute
@@ -202,8 +196,8 @@ Format a mysql query
 |-----------------------------------------------------------------|---|
 | `:%s#\<from\>\|\<where\>\|\<left join\>\|\<\inner join\>#\r&#g` |   |
 
-best-global command 
--------------------
+Global command 
+--------------
 |                                |                                                   |
 |--------------------------------|---------------------------------------------------|
 | `:g/gladiolli/#`               | display with line numbers                         |
@@ -225,96 +219,90 @@ best-global command
 
 Save results to a register/paste buffer
 ----------------
-|                             |                                     |
-|-----------------------------|-------------------------------------|
-`:g/fred/y A`                 | append all lines fred to register a |
-`:g/fred/y A \| :let @\*=@a`  | put into paste buffer               |
-`:g//y A \| :let @\*=@a`      | put last glob into paste buffer     |
-`:let @a=''\|g/Barratt/y A \|:let @\*=@a` |                          |
+|                                           |                                     |
+|-------------------------------------------|-------------------------------------|
+| `:g/fred/y A`                             | append all lines fred to register a |
+| `:g/fred/y A \| :let @\*=@a`              | put into paste buffer               |
+| `:g//y A \| :let @\*=@a`                  | put last glob into paste buffer     |
+| `:let @a=''\|g/Barratt/y A \|:let @\*=@a` |                                     |
 
 Filter lines to a file (file must already exist)
 ------------------------------------------------
 `:'a,'bg/^Error/ . w >> errors.txt`
 
-" duplicate every line in a file wrap a print '' around each duplicate
+Duplicate every line in a file wrap a print '' around each duplicate
 ----------------
-:g/./yank|put|-1s/'/"/g|s/.\*/Print '&'/
-" replace string with contents of a file, -d deletes the "mark"
-:g/^MARK$/r tmp.txt | -d
-" display prettily
-:g/<pattern>/z#.5           : display with context
-:g/<pattern>/z#.5|echo "=========="  : display beautifully
+`:g/./yank|put|-1s/'/"/g|s/.\*/Print '&'/`
 
-Combining g// with normal mode commands
-----------------
-:g/|/norm 2f|r\*                      : replace 2nd | with a star
-"send output of previous global command to a new window
-:nmap <F3>  :redir @a<CR>:g//<CR>:redir END<CR>:new<CR>:put! a<CR><CR>
+Replace string with contents of a file, -d deletes the "mark"
+------------
+|                                       |                      |
+|---------------------------------------|----------------------|
+| `:g/^MARK$/r tmp.txt | -d`            |                      |
+| `:g/<pattern>/z#.5`                   | display with context |
+| `:g/<pattern>/z#.5|echo "=========="` | display beautifully  |
 
-Best-Global-combined-with-substitute 
-----------------------------------------
-:'a,'bg/fred/s/joe/susan/gic :  can use memory to extend matching
-:/fred/,/joe/s/fred/joe/gic :  non-line based (ultra)
-:/biz/,/any/g/article/s/wheel/bucket/gic:  non-line based [N]
-
-Find fred before beginning search for joe
-----------------------------------------
-:/fred/;/joe/-2,/sid/+3s/sally/alley/gIC
+Send output of previous global command to a new window
+----
+`:nmap <F3>  :redir @a<CR>:g//<CR>:redir END<CR>:new<CR>:put! a<CR><CR>`
 
 Create a new file for each line of file eg 1.txt,2.txt,3,txt etc
 ----------------------------------------
-:g/^/exe ".w ".line(".").".txt"
+`:g/^/exe ".w ".line(".").".txt"`
 
 Chain an external command
 ----------------------------------------
-:.g/^/ exe ".!sed 's/N/X/'" | s/I/Q/    [N]
+`:.g/^/ exe ".!sed 's/N/X/'" | s/I/Q/`
 
-Operate until string found [N]
-----------------------------------------
-d/fred/                                :delete until fred
-y/fred/                                :yank until fred
-c/fred/e                               :change until fred end
-v12|                                   : visualise/change/delete to column 12 [N]
+Operate until string found
+--------------------------
+|            |                                      |
+|------------|--------------------------------------|
+| `d/fred/`  | delete until fred                    |
+| `y/fred/`  | yank until fred                      |
+| `c/fred/e` | change until fred end                |
+| `v12|`     | visualise/change/delete to column 12 |
 
-Summary of editing repeats [N]
-----------------------------------------
-.      last edit (magic dot)
-:&     last substitute
-:%&    last substitute every line
-:%&gic last substitute every line confirm
-g%     normal mode repeat last substitute
-g&     last substitute on all lines
-@@     last recording
-@:     last command-mode command
-:!!    last :! command
-:~     last substitute
-:help repeating
+Summary of editing repeats
+--------------------------
+|          |                                    |
+|----------|------------------------------------|
+| `.`      | last edit (magic dot)              |
+| `:&`     | last substitute                    |
+| `:%&`    | last substitute every line         |
+| `:%&gic` | last substitute every line confirm |
+| `g%`     | normal mode repeat last substitute |
+| `g&`     | last substitute on all lines       |
+| `@@`     | last recording                     |
+| `@:`     | last command-mode command          |
+| `:!!`    | last :! command                    |
+| `:~`     | last substitute                    |
 
 Summary of repeated searches
 ----------------------------------------
-;      last f, t, F or T
-,      last f, t, F or T in opposite direction
-n      last / or ? search
-N      last / or ? search in opposite direction
+|     |                                          |
+|-----|------------------------------------------|
+| `;` | last f, t, F or T                        |
+| `,` | last f, t, F or T in opposite direction  |
+| `n` | last / or ? search                       |
+| `N` | last / or ? search in opposite direction |
 
 Absolutely-essential
 ----------------------------------------
-* # g* g#           : find word under cursor (<cword>) (forwards/backwards)
-%                   : match brackets {}[]()
-.                   : repeat last modification 
-@:                  : repeat last : command (then @@)
-matchit.vim         : % now matches tags <tr><td><script> <?php etc
-<C-N><C-P>          : word completion in insert mode
-<C-X><C-L>          : Line complete SUPER USEFUL
-/<C-R><C-W>         : Pull <cword> onto search/command line
-/<C-R><C-A>         : Pull <CWORD> onto search/command line
-:set ignorecase     : you nearly always want this
-:set smartcase      : overrides ignorecase if uppercase used in search string (cool)
-:syntax on          : colour syntax in Perl,HTML,PHP etc
-:set syntax=perl    : force syntax (usually taken from file extension)
-:syntax sync fromstart  : Fix syntax highlighting [N]
-:h regexp<C-D>      : type control-D and get a list all help topics containing
-                      regexp (plus use TAB to Step thru list)
+| `* # g* g#`           | find word under cursor (<cword>) (forwards/backwards) |
+| `%`                   | match brackets {}[]() |
+| `.`                   | repeat last modification  |
+| `@:`                  | repeat last : command (then @@) |
+| `matchit.vim`         | % now matches tags <tr><td><script> <?php etc |
+| `<C-N><C-P>`          | word completion in insert mode |
+| `<C-X><C-L>`          | Line complete SUPER USEFUL |
+| `/<C-R><C-W>`         | Pull <cword> onto search/command line |
+| `/<C-R><C-A>`         | Pull <CWORD> onto search/command line |
+| `:set ignorecase`     | you nearly always want this                                    |
+| `:set smartcase`      | overrides ignorecase if uppercase used in search string (cool) |
+| `:syntax on`          | colour syntax in Perl,HTML,PHP etc                             |
+| `:h regexp<C-D>`      | type control-D and get a list all help topics containing       |
+
 MAKE IT EASY TO UPDATE/RELOAD _vimrc
 ----------------------------------------
 :nmap ,s :source $VIM/_vimrc
